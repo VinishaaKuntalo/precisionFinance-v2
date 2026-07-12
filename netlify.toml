@@ -2,7 +2,7 @@
 #
 # IMPORTANT: set the backend URL for the build in Netlify UI:
 #   Site settings -> Environment variables -> add:
-#     VITE_API_URL = https://YOUR-BACKEND-URL   (e.g. https://precision-finance-api.up.railway.app)
+#     VITE_API_URL = https://precisionfinance-can.netlify.app   (e.g. https://precision-finance-api.up.railway.app)
 # Then trigger a redeploy. Without this, the app falls back to http://localhost:3001
 # and no visitor can log in. (Users can also override at runtime via the API-server
 # button on the login screen, which stores pf_api_url in localStorage.)
