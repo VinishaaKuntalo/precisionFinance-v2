@@ -100,11 +100,11 @@ export default function Navigation() {
         }`}
         style={{ backdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none' }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
-          <a href="#hero" onClick={() => scrollTo('#hero')} className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+          <a href="#hero" onClick={() => scrollTo('#hero')} className="flex items-center gap-2.5 group">
             <div
-              className="w-7 h-7 flex items-center justify-center rounded-lg"
-              style={{ background: '#7c3aed', boxShadow: '0 2px 12px rgba(124,58,237,0.4)' }}
+              className="w-7 h-7 flex items-center justify-center rounded-lg transition-transform group-hover:scale-105"
+              style={{ background: 'linear-gradient(135deg,#8b5cf6,#6d28d9)', boxShadow: '0 2px 12px rgba(124,58,237,0.4)' }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
             </div>
@@ -113,18 +113,21 @@ export default function Navigation() {
             </span>
           </a>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={() => scrollTo(link.href)}
-                className="text-zinc-500 hover:text-white text-xs font-mono-data uppercase tracking-wider transition-colors"
+                className="text-zinc-400 hover:text-white hover:bg-white/5 text-xs font-mono-data uppercase tracking-wider transition-colors px-3 py-2 rounded-lg"
               >
                 {link.label}
               </button>
             ))}
+
+            <div className="w-px h-5 bg-white/10 mx-3" />
+
             <button
-              className="btn-primary text-xs px-4 py-1.5"
+              className="btn-primary text-xs px-4 py-2 font-semibold"
               onClick={() => scrollTo('#dashboard')}
             >
               Open Dashboard
@@ -132,7 +135,7 @@ export default function Navigation() {
 
             <button
               onClick={toggleTheme}
-              className="text-zinc-500 hover:text-white p-1.5 transition-colors"
+              className="text-zinc-500 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-colors ml-1"
               title={isDark ? 'Switch to light' : 'Switch to dark'}
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -140,7 +143,7 @@ export default function Navigation() {
 
             <button
               onClick={() => setSettingsOpen(true)}
-              className="text-zinc-500 hover:text-white p-1.5 transition-colors"
+              className="text-zinc-500 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-colors"
               title="Settings"
             >
               <Settings className="w-4 h-4" />
@@ -149,7 +152,7 @@ export default function Navigation() {
             {user && (
               <button
                 onClick={logout}
-                className="text-zinc-500 hover:text-red-500 text-xs font-mono-data uppercase tracking-wider transition-colors flex items-center gap-1"
+                className="text-zinc-500 hover:text-red-400 text-xs font-mono-data uppercase tracking-wider transition-colors flex items-center gap-1.5 ml-1 pl-3 border-l border-white/10"
                 title="Logout"
               >
                 <LogOut className="w-3 h-3" />

@@ -157,11 +157,17 @@
   /* ── Chips / badges ─────────────────────────────── */
   .chip {
     border-radius: 999px;
-    padding: 2px 10px;
+    padding: 4px 12px;
     font-size: 11px;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 

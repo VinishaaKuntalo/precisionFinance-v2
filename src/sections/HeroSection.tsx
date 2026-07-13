@@ -1,6 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { AuroraBackground } from '@/lib/effects/AuroraBackground';
-import { CreditCard, Shield, TrendingDown, Zap } from 'lucide-react';
+import {
+  CreditCard,
+  ShieldCheck,
+  ArrowUpRight,
+  ArrowDownRight,
+  Sparkles,
+  ArrowRight,
+  PlayCircle,
+} from 'lucide-react';
 
 export default function HeroSection() {
   const canvasContainerRef = useRef<HTMLDivElement>(null);
@@ -9,8 +17,8 @@ export default function HeroSection() {
   useEffect(() => {
     if (canvasContainerRef.current && !auroraRef.current) {
       auroraRef.current = new AuroraBackground(canvasContainerRef.current, {
-        breathingSpeed: 0.8,
-        displacementSpeed: 0.6,
+        breathingSpeed: 0.6,
+        displacementSpeed: 0.45,
       });
     }
     return () => {
@@ -24,60 +32,187 @@ export default function HeroSection() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToEcosystem = () => {
+    const el = document.getElementById('ecosystem');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section
       id="hero"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-screen flex items-center overflow-hidden pt-28 pb-20"
     >
+      {/* Aurora field, confined + faded so it reads as ambient light, not a poster */}
       <div
         ref={canvasContainerRef}
+        className="absolute inset-0 opacity-70"
+        style={{ zIndex: 0 }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 0,
+          zIndex: 1,
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)',
         }}
       />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 1, background: 'linear-gradient(180deg, transparent 60%, rgba(9,9,11,0.9) 100%)' }}
+      />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <p className="chip font-mono-data tracking-[0.15em] text-violet-300/90 bg-violet-500/10 uppercase mb-8 inline-block">
-          Automated Financial Intelligence
-        </p>
-        <h1
-          className="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight leading-none mb-6"
-        >
-          Track.
-          <br />
-          Automate.
-          <br />
-          <span className="text-gradient" style={{ filter: 'drop-shadow(0 0 24px rgba(124,58,237,0.3))' }}>Optimize.</span>
-        </h1>
-        <p className="text-lg md:text-xl text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed">
-          A precise, terminal-like experience for tracking credit balances,
-          monitoring payments, and optimizing your cash flow.
-        </p>
-        <button
-          onClick={scrollToDashboard}
-          className="btn-primary text-sm px-8 py-3 tracking-wide uppercase"
-        >
-          Initialize Dashboard
-        </button>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20">
-          {[
-            { icon: CreditCard, label: '7 Cards Linked', sub: 'Real-time sync' },
-            { icon: Shield, label: '256-bit Encryption', sub: 'Bank-level security' },
-            { icon: TrendingDown, label: '$12.1K Total', sub: 'Balance tracked' },
-            { icon: Zap, label: '3 Due Soon', sub: 'Auto-reminders set' },
-          ].map((item, i) => (
-            <div key={i} className="glass-card glass-card-hover flex flex-col items-center gap-2 py-5 px-3">
-              <item.icon className="w-5 h-5 text-violet-400" strokeWidth={1.5} />
-              <span className="text-white text-sm font-medium">{item.label}</span>
-              <span className="text-zinc-500 text-xs font-mono-data">{item.sub}</span>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr] gap-16 items-center">
+          {/* ── Left: copy ────────────────────────────── */}
+          <div>
+            <div className="chip font-mono-data tracking-[0.15em] text-violet-300/90 bg-violet-500/10 uppercase mb-7 inline-flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3" strokeWidth={2} />
+              Automated Financial Intelligence
             </div>
-          ))}
+
+            <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-white tracking-tight leading-[1.03] mb-6 text-balance">
+              Track. Automate.
+              <br />
+              <span
+                className="text-gradient"
+                style={{ filter: 'drop-shadow(0 0 28px rgba(124,58,237,0.35))' }}
+              >
+                Optimize.
+              </span>
+            </h1>
+
+            <p className="text-lg text-zinc-400 max-w-md mb-10 leading-relaxed">
+              A precise, terminal-like command center for tracking credit balances,
+              automating payments, and optimizing cash flow across every account you hold.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 mb-14">
+              <button
+                onClick={scrollToDashboard}
+                className="btn-primary text-sm px-6 py-3 font-semibold flex items-center gap-2"
+              >
+                Initialize Dashboard
+                <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              </button>
+              <button
+                onClick={scrollToEcosystem}
+                className="btn-ghost text-sm px-6 py-3 font-medium flex items-center gap-2"
+              >
+                <PlayCircle className="w-4 h-4" strokeWidth={1.5} />
+                See how it works
+              </button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+              <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
+                <ShieldCheck className="w-3.5 h-3.5 text-violet-400" strokeWidth={1.75} />
+                256-bit encryption
+              </div>
+              <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
+                <CreditCard className="w-3.5 h-3.5 text-violet-400" strokeWidth={1.75} />
+                Plaid-powered sync
+              </div>
+              <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
+                </span>
+                Live balances
+              </div>
+            </div>
+          </div>
+
+          {/* ── Right: product preview ───────────────── */}
+          <div className="relative">
+            <div
+              className="absolute -inset-6 rounded-[28px] opacity-60 pointer-events-none"
+              style={{ background: 'radial-gradient(60% 60% at 50% 40%, rgba(124,58,237,0.18), transparent 70%)' }}
+            />
+            <div className="glass-modal relative p-0 overflow-hidden">
+              {/* window chrome */}
+              <div className="flex items-center gap-1.5 px-5 py-3.5 border-b border-white/10">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                <span className="ml-3 text-zinc-500 text-[11px] font-mono-data tracking-wide">
+                  precisionfinance.app/dashboard
+                </span>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1.5">Total Balance</p>
+                    <p className="text-white text-3xl font-bold tracking-tight">$12,118.42</p>
+                  </div>
+                  <span className="chip font-mono-data text-green-400 bg-green-400/10 flex items-center gap-1">
+                    <ArrowDownRight className="w-3 h-3" />
+                    4.2%
+                  </span>
+                </div>
+
+                {/* mini sparkline bars */}
+                <div className="flex items-end gap-1.5 h-16 mb-6">
+                  {[38, 52, 44, 61, 49, 58, 71, 64, 78, 69, 84, 92].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-t-sm"
+                      style={{
+                        height: `${h}%`,
+                        background:
+                          i === 11
+                            ? 'linear-gradient(180deg,#a78bfa,#7c3aed)'
+                            : 'rgba(167,139,250,0.18)',
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div className="space-y-2.5">
+                  {[
+                    { bank: 'CIBC Aventura', mask: '4471', amount: '-$1,204.18', color: '#C41F3E' },
+                    { bank: 'Scotiabank Momentum', mask: '2290', amount: '-$318.55', color: '#f97316' },
+                    { bank: 'Wealthsimple Cash', mask: '9012', amount: '+$4,880.00', color: '#00D632' },
+                  ].map((row) => (
+                    <div
+                      key={row.mask}
+                      className="glass-inset flex items-center justify-between px-4 py-3"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="w-8 h-8 rounded-lg flex-shrink-0"
+                          style={{ background: row.color, boxShadow: `0 4px 14px ${row.color}44` }}
+                        />
+                        <div>
+                          <p className="text-white text-xs font-medium">{row.bank}</p>
+                          <p className="text-zinc-600 text-[11px] font-mono-data">**** {row.mask}</p>
+                        </div>
+                      </div>
+                      <span
+                        className={`text-xs font-mono-data font-medium ${
+                          row.amount.startsWith('+') ? 'text-green-400' : 'text-zinc-300'
+                        }`}
+                      >
+                        {row.amount}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* floating badge */}
+            <div className="glass-card absolute -bottom-5 -left-5 px-4 py-3 hidden md:flex items-center gap-2.5">
+              <ArrowUpRight className="w-3.5 h-3.5 text-green-400" strokeWidth={2} />
+              <div>
+                <p className="text-white text-xs font-semibold leading-none mb-1">Autopay active</p>
+                <p className="text-zinc-500 text-[10px] font-mono-data leading-none">3 accounts synced</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
