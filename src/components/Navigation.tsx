@@ -104,7 +104,7 @@ export default function Navigation() {
           <a href="#hero" onClick={() => scrollTo('#hero')} className="flex items-center gap-2">
             <div
               className="w-7 h-7 flex items-center justify-center rounded-lg"
-              style={{ background: 'linear-gradient(135deg, #ef4444, #b91c1c)', boxShadow: '0 2px 12px rgba(239,68,68,0.5)' }}
+              style={{ background: '#7c3aed', boxShadow: '0 2px 12px rgba(124,58,237,0.4)' }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
             </div>

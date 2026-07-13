@@ -45,7 +45,7 @@ function DecodeLink({ label, href }: { label: string; href: string }) {
   return (
     <a
       href={href}
-      className="text-zinc-600 hover:text-red-500 transition-colors text-sm font-mono-data block py-1"
+      className="text-zinc-600 hover:text-violet-400 transition-colors text-sm font-mono-data block py-1"
       onMouseEnter={() => {
         shuffle();
       }}
@@ -68,7 +68,7 @@ export default function FooterSection() {
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="w-8 h-8 flex items-center justify-center rounded-lg"
-                style={{ background: 'linear-gradient(135deg, #ef4444, #b91c1c)', boxShadow: '0 2px 12px rgba(239,68,68,0.5)' }}
+                style={{ background: '#7c3aed', boxShadow: '0 2px 12px rgba(124,58,237,0.4)' }}
               >
                 <span className="text-white font-bold text-xs">PF</span>
               </div>

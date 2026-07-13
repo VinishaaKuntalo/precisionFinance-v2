@@ -26,10 +26,10 @@ function PayoffCelebration({ visible }: { visible: boolean }) {
     <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
       <div className="text-center animate-in fade-in zoom-in duration-700">
         <div className="relative">
-          <Sparkles className="w-20 h-20 text-red-500 mx-auto mb-4 animate-pulse" />
+          <Sparkles className="w-20 h-20 text-violet-400 mx-auto mb-4 animate-pulse" />
           <div
             className="absolute inset-0 blur-3xl opacity-50"
-            style={{ background: 'radial-gradient(circle, rgba(239,68,68,0.4) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.4) 0%, transparent 70%)' }}
           />
         </div>
         <h2 className="text-5xl md:text-7xl font-bold text-white mb-2 tracking-tight">
@@ -39,7 +39,7 @@ function PayoffCelebration({ visible }: { visible: boolean }) {
           You have officially paid off all credit card balances
         </p>
         <div className="flex items-center justify-center gap-4 mt-6">
-          <div className="flex items-center gap-2 text-red-400">
+          <div className="flex items-center gap-2 text-violet-400">
             <Flame className="w-5 h-5" />
             <span className="text-sm font-medium">$0.00 remaining</span>
           </div>
@@ -68,7 +68,7 @@ export default function SavingsOptimization() {
         particleCount: 120,
         baseSpeed: 1.2,
         trailLength: 0.15,
-        colors: ['#ef4444', '#f97316', '#dc2626', '#991b1b'],
+        colors: ['#8b5cf6', '#7c3aed', '#a78bfa', '#4c1d95'],
         particleSize: 2,
       });
     }
@@ -166,7 +166,7 @@ export default function SavingsOptimization() {
           {/* Center - Payoff Progress */}
           <div className="glass-card p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Target className="w-4 h-4 text-red-500" strokeWidth={1.5} />
+              <Target className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Debt Payoff Progress</span>
             </div>
 
@@ -193,8 +193,8 @@ export default function SavingsOptimization() {
                         className="h-full transition-all duration-1000 rounded-full"
                         style={{
                           width: `${Math.min(pct, 100)}%`,
-                          background: 'linear-gradient(90deg,#f87171,#ef4444)',
-                          boxShadow: '0 0 10px rgba(239,68,68,0.4)',
+                          background: 'linear-gradient(90deg,#a78bfa,#7c3aed)',
+                          boxShadow: '0 0 10px rgba(124,58,237,0.4)',
                         }}
                       />
                     </div>
@@ -263,7 +263,7 @@ export default function SavingsOptimization() {
             >
               <h4 className="text-white text-sm font-medium mb-2">{tip.title}</h4>
               <p className="text-zinc-500 text-xs leading-relaxed mb-3">{tip.desc}</p>
-              <button className="text-red-500 text-xs font-medium hover:text-red-400 transition-colors">
+              <button className="text-violet-500 text-xs font-medium hover:text-violet-400 transition-colors">
                 {tip.action} →
               </button>
             </div>
@@ -291,7 +291,7 @@ function DashboardCard({
       className="glass-card glass-card-hover p-5"
     >
       <div className="flex items-center gap-2 mb-4">
-        <Icon className="w-4 h-4 text-red-500" strokeWidth={1.5} />
+        <Icon className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
         <span className="text-zinc-500 text-xs font-mono-data uppercase">{title}</span>
       </div>
       <p className="text-white text-2xl font-bold mb-1">{value}</p>

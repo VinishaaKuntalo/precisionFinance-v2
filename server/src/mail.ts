@@ -53,6 +53,76 @@ export async function sendPasswordResetEmail(to: string, token: string) {
   return { sent: true, logged: false, resetUrl };
 }
 
+export interface DueReminderCard {
+  accountName: string;
+  institutionName: string;
+  mask: string;
+  amount: number;
+  currency: string;
+  dueDate: string;
+  daysUntilDue: number;
+  isOverdue: boolean;
+}
+
+export async function sendDueDateReminderEmail(to: string, cards: DueReminderCard[]) {
+  if (cards.length === 0) return { sent: false, logged: false };
+
+  const rows = cards
+    .map((c) => {
+      const amount = new Intl.NumberFormat('en-CA', { style: 'currency', currency: c.currency || 'CAD' }).format(c.amount || 0);
+      const status = c.isOverdue
+        ? `<span style="color:#dc2626;font-weight:600;">Overdue</span>`
+        : c.daysUntilDue === 0
+        ? `<span style="color:#b45309;font-weight:600;">Due today</span>`
+        : `<span style="color:#b45309;font-weight:600;">Due in ${c.daysUntilDue} day${c.daysUntilDue === 1 ? '' : 's'}</span>`;
+      return `
+        <tr>
+          <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;">
+            <div style="font-weight:600;color:#111827;">${c.institutionName} ${c.accountName}${c.mask ? ` •••• ${c.mask}` : ''}</div>
+            <div style="font-size:13px;color:#6b7280;margin-top:2px;">Due ${c.dueDate} — ${status}</div>
+          </td>
+          <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;text-align:right;font-weight:600;color:#111827;">
+            ${amount}
+          </td>
+        </tr>`;
+    })
+    .join('');
+
+  const text = cards
+    .map((c) => `${c.institutionName} ${c.accountName}: ${c.amount} due ${c.dueDate} (${c.isOverdue ? 'OVERDUE' : `${c.daysUntilDue} day(s) left`})`)
+    .join('\n');
+
+  if (!isConfigured || !transporter) {
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('  EMAIL NOT CONFIGURED - Due date reminder below:');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`  To: ${to}`);
+    console.log(text);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+    return { sent: false, logged: true };
+  }
+
+  await transporter.sendMail({
+    from: `Precision Finance <${FROM_EMAIL}>`,
+    to,
+    subject: cards.some((c) => c.isOverdue) ? 'Overdue: credit card payment(s) need attention' : 'Reminder: upcoming credit card payment(s)',
+    text: `You have upcoming credit card payments:\n\n${text}\n\nView details: ${FRONTEND_URL}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 520px; margin: 0 auto; padding: 24px; color: #111827;">
+        <h2 style="color: #7c3aed; margin-bottom: 4px;">Payment Reminder</h2>
+        <p style="color: #6b7280; font-size: 14px; margin-top: 0;">The following card(s) have payments coming up:</p>
+        <table style="width: 100%; border-collapse: collapse;">${rows}</table>
+        <p style="margin-top: 24px;">
+          <a href="${FRONTEND_URL}" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">Open Precision Finance</a>
+        </p>
+        <p style="color: #9ca3af; font-size: 12px; margin-top: 24px;">You're receiving this because you have a payment reminder set on this account.</p>
+      </div>
+    `,
+  });
+
+  return { sent: true, logged: false };
+}
+
 export function getEmailStatus() {
   return { isConfigured, from: FROM_EMAIL };
 }

@@ -116,4 +116,13 @@ db.exec(`
   );
 `);
 
+// ─── Migrations (idempotent — safe to run on every boot) ───
+// Tracks the last date a due-date reminder email was sent for a schedule,
+// so the daily reminder check never emails the same due cycle twice.
+try {
+  db.exec(`ALTER TABLE payment_schedules ADD COLUMN last_reminder_sent TEXT`);
+} catch {
+  // column already exists — ignore
+}
+
 export default db;

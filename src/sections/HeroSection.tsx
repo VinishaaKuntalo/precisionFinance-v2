@@ -42,18 +42,17 @@ export default function HeroSection() {
       />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <p className="chip font-mono-data tracking-[0.15em] text-red-300/90 bg-red-500/10 uppercase mb-8 inline-block">
+        <p className="chip font-mono-data tracking-[0.15em] text-violet-300/90 bg-violet-500/10 uppercase mb-8 inline-block">
           Automated Financial Intelligence
         </p>
         <h1
           className="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight leading-none mb-6"
-          style={{ letterSpacing: '-0.02em' }}
         >
           Track.
           <br />
           Automate.
           <br />
-          <span className="text-gradient" style={{ filter: 'drop-shadow(0 0 24px rgba(239,68,68,0.35))' }}>Optimize.</span>
+          <span className="text-gradient" style={{ filter: 'drop-shadow(0 0 24px rgba(124,58,237,0.3))' }}>Optimize.</span>
         </h1>
         <p className="text-lg md:text-xl text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed">
           A precise, terminal-like experience for tracking credit balances,
@@ -74,7 +73,7 @@ export default function HeroSection() {
             { icon: Zap, label: '3 Due Soon', sub: 'Auto-reminders set' },
           ].map((item, i) => (
             <div key={i} className="glass-card glass-card-hover flex flex-col items-center gap-2 py-5 px-3">
-              <item.icon className="w-5 h-5 text-red-400" strokeWidth={1.5} />
+              <item.icon className="w-5 h-5 text-violet-400" strokeWidth={1.5} />
               <span className="text-white text-sm font-medium">{item.label}</span>
               <span className="text-zinc-500 text-xs font-mono-data">{item.sub}</span>
             </div>

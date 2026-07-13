@@ -7,7 +7,7 @@ import { PlaidApi, PlaidEnvironments, Configuration, Products, CountryCode } fro
 import db from './db.js';
 import { authMiddleware, generateToken } from './auth.js';
 import type { AuthenticatedRequest } from './auth.js';
-import { sendPasswordResetEmail } from './mail.js';
+import { sendPasswordResetEmail, sendDueDateReminderEmail } from './mail.js';
 
 const app = express();
 app.use(cors({
@@ -769,6 +769,90 @@ app.get('/api/payments/upcoming', authMiddleware, (req: AuthenticatedRequest, re
   }).sort((a, b) => a.daysUntilDue - b.daysUntilDue);
 
   res.json(upcoming);
+});
+
+// ─── Due-date reminder emails (triggered by an external daily scheduler) ─
+// Protected by a shared secret rather than JWT since it's called by a cron
+// job / scheduled task, not a logged-in user in the browser.
+
+app.post('/api/cron/check-reminders', async (req, res) => {
+  const secret = req.headers['x-cron-secret'];
+  if (!process.env.CRON_SECRET || secret !== process.env.CRON_SECRET) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+
+  try {
+    const now = new Date();
+    const currentDay = now.getDate();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    const schedules = db.prepare(`
+      SELECT ps.*, a.name as account_name, a.mask, a.balance_current, a.balance_limit, a.currency_code,
+             pi.institution_name, u.email as user_email
+      FROM payment_schedules ps
+      JOIN accounts a ON ps.account_id = a.id
+      JOIN plaid_items pi ON a.item_id = pi.id
+      JOIN users u ON ps.user_id = u.id
+      WHERE ps.status = 'active'
+    `).all() as any[];
+
+    const dueSoonByUser = new Map<string, { email: string; cards: any[] }>();
+
+    for (const s of schedules) {
+      let dueMonth = currentMonth;
+      let dueYear = currentYear;
+      if (s.due_day < currentDay) {
+        dueMonth++;
+        if (dueMonth > 11) {
+          dueMonth = 0;
+          dueYear++;
+        }
+      }
+      const dueDate = new Date(dueYear, dueMonth, s.due_day);
+      const daysUntilDue = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      const isOverdue = daysUntilDue < 0;
+      const isUrgent = daysUntilDue <= (s.reminder_days ?? 3) && daysUntilDue >= 0;
+      const dueDateStr = dueDate.toISOString().split('T')[0];
+
+      if (!isOverdue && !isUrgent) continue;
+      // Already emailed for this exact due date — skip until the next cycle.
+      if (s.last_reminder_sent === dueDateStr) continue;
+
+      const entry = dueSoonByUser.get(s.user_email) || { email: s.user_email, cards: [] };
+      entry.cards.push({
+        scheduleId: s.id,
+        accountName: s.account_name,
+        institutionName: s.institution_name,
+        mask: s.mask,
+        amount: s.minimum_payment || s.statement_balance || 0,
+        currency: s.currency_code || 'CAD',
+        dueDate: dueDateStr,
+        daysUntilDue,
+        isOverdue,
+      });
+      dueSoonByUser.set(s.user_email, entry);
+    }
+
+    let emailsSent = 0;
+    const markSent = db.prepare(`UPDATE payment_schedules SET last_reminder_sent = ? WHERE id = ?`);
+
+    for (const { email, cards } of dueSoonByUser.values()) {
+      const result = await sendDueDateReminderEmail(email, cards);
+      if (result.sent || result.logged) {
+        emailsSent++;
+        for (const c of cards) {
+          markSent.run(c.dueDate, c.scheduleId);
+        }
+      }
+    }
+
+    res.json({ checked: schedules.length, usersNotified: dueSoonByUser.size, emailsSent });
+  } catch (err: any) {
+    console.error('Reminder check error:', err.message);
+    res.status(500).json({ error: 'Failed to check reminders' });
+  }
 });
 
 // ─── Start server ───────────────────────────────────

@@ -5,25 +5,25 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 96%;
-    --card-foreground: 0 0% 9%;
+    --foreground: 240 10% 9%;
+    --card: 240 5% 96%;
+    --card-foreground: 240 10% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 0 84% 60%;
+    --popover-foreground: 240 10% 9%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 84% 60%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 9%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 45%;
+    --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 0% / 0.1;
-    --input: 0 0% 0% / 0.1;
-    --ring: 0 84% 60%;
-    --radius: 1rem;
+    --border: 240 6% 0% / 0.1;
+    --input: 240 6% 0% / 0.1;
+    --ring: 262 83% 58%;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -33,20 +33,20 @@
     --card-foreground: 0 0% 100%;
     --popover: 240 12% 6%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 84% 60%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 262 83% 65%;
+    --primary-foreground: 0 0% 8%;
     --secondary: 240 10% 8%;
     --secondary-foreground: 0 0% 100%;
     --muted: 240 10% 8%;
     --muted-foreground: 240 6% 55%;
-    --accent: 0 84% 60%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 84% 60%;
+    --accent: 262 83% 65%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 72% 58%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 100% / 0.08;
     --input: 0 0% 100% / 0.08;
-    --ring: 0 84% 60%;
-    --radius: 1rem;
+    --ring: 262 83% 65%;
+    --radius: 0.75rem;
   }
 
   body {
@@ -54,101 +54,87 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
-  /* Ambient gradient mesh behind everything (glassmorphic backdrop) */
+  /* Ambient gradient wash behind everything — one restrained accent hue,
+     not a multi-color mesh. Subtle, mostly-neutral zinc-950 base. */
   .dark body {
-    background-color: #060609;
+    background-color: #09090b;
     background-image:
-      radial-gradient(ellipse 55% 40% at 12% -5%, rgba(239, 68, 68, 0.14), transparent 60%),
-      radial-gradient(ellipse 45% 35% at 90% 8%, rgba(168, 85, 247, 0.10), transparent 60%),
-      radial-gradient(ellipse 60% 45% at 50% 110%, rgba(239, 68, 68, 0.08), transparent 65%),
-      radial-gradient(ellipse 35% 30% at 80% 65%, rgba(59, 130, 246, 0.06), transparent 60%);
+      radial-gradient(ellipse 50% 38% at 15% -5%, rgba(124, 58, 237, 0.12), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 90% 10%, rgba(124, 58, 237, 0.06), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 50% 110%, rgba(124, 58, 237, 0.05), transparent 65%);
     background-attachment: fixed;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer components {
   /* ── Glass surfaces ─────────────────────────────── */
   .glass-card {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 16px;
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
   }
 
   .glass-card-hover {
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
   .glass-card-hover:hover {
-    transform: translateY(-2px);
-    border-color: rgba(239, 68, 68, 0.35);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.45),
-      0 0 24px rgba(239, 68, 68, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(167, 139, 250, 0.4);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
   }
 
   /* Inset panel inside a glass card */
   .glass-inset {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    border-radius: 10px;
   }
 
   /* Strong glass for modals / nav */
   .glass-modal {
-    background: linear-gradient(160deg, rgba(24, 24, 32, 0.85), rgba(12, 12, 18, 0.9));
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    backdrop-filter: blur(28px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    box-shadow:
-      0 24px 80px rgba(0, 0, 0, 0.6),
-      0 0 40px rgba(239, 68, 68, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: rgba(15, 15, 20, 0.92);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
   }
 
   /* ── Inputs ─────────────────────────────────────── */
   .glass-input {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    border-radius: 8px;
     color: #fff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .glass-input:focus {
     outline: none;
-    border-color: rgba(239, 68, 68, 0.6);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
-    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(167, 139, 250, 0.6);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
   }
 
   /* ── Buttons ────────────────────────────────────── */
   .btn-primary {
-    background: linear-gradient(135deg, #ef4444, #dc2626 60%, #b91c1c);
+    background: #7c3aed;
     color: #fff;
     font-weight: 600;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow:
-      0 4px 20px rgba(239, 68, 68, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.15s ease, transform 0.1s ease;
   }
   .btn-primary:hover {
-    filter: brightness(1.1);
-    box-shadow:
-      0 6px 28px rgba(239, 68, 68, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background-color: #8b5cf6;
     transform: translateY(-1px);
   }
   .btn-primary:active {
@@ -185,15 +171,15 @@
   }
 
   .text-gradient {
-    background: linear-gradient(120deg, #f87171, #ef4444 40%, #c084fc);
+    background: linear-gradient(120deg, #c4b5fd, #8b5cf6 45%, #6366f1);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .border-glow {
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.1), inset 0 0 20px rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    box-shadow: inset 0 0 20px rgba(124, 58, 237, 0.05);
   }
 
   .bg-card {
