@@ -100,7 +100,7 @@ export default function Navigation() {
           <a href="#hero" onClick={() => scrollTo('#hero')} className="flex items-center gap-2.5 group">
             <div
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-transform group-hover:scale-105"
-              style={{ background: 'linear-gradient(135deg,#8b5cf6,#6d28d9)', boxShadow: '0 2px 12px rgba(124,58,237,0.3)' }}
+              style={{ background: 'linear-gradient(135deg,#C97852,#8F4429)', boxShadow: '0 2px 12px rgba(188,91,59,0.3)' }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
             </div>

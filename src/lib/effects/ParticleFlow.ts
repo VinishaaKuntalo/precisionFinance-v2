@@ -23,7 +23,7 @@ const defaultOptions: Required<ParticleFlowOptions> = {
   particleCount: 100,
   baseSpeed: 1,
   trailLength: 0.2,
-  colors: ['#8b5cf6', '#7c3aed', '#4c1d95'],
+  colors: ['#C97852', '#BC5B3B', '#6B341F'],
   particleSize: 1,
   trailColor: '249, 247, 243',
 };

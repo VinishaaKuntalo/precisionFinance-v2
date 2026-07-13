@@ -10,19 +10,19 @@
     --card-foreground: 240 10% 9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 9%;
-    --primary: 262 83% 58%;
+    --primary: 15 60% 47%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 5% 96%;
     --secondary-foreground: 240 10% 9%;
     --muted: 240 5% 95%;
     --muted-foreground: 240 4% 40%;
-    --accent: 262 83% 58%;
+    --accent: 15 60% 47%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
     --border: 240 6% 88%;
     --input: 240 6% 88%;
-    --ring: 262 83% 58%;
+    --ring: 15 60% 47%;
     --radius: 0.75rem;
   }
 
@@ -31,8 +31,8 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-color: #f9f7f3;
     background-image:
-      radial-gradient(ellipse 50% 35% at 12% -5%, rgba(124, 58, 237, 0.06), transparent 60%),
-      radial-gradient(ellipse 45% 32% at 92% 8%, rgba(124, 58, 237, 0.04), transparent 60%);
+      radial-gradient(ellipse 50% 35% at 12% -5%, rgba(188, 91, 59, 0.06), transparent 60%),
+      radial-gradient(ellipse 45% 32% at 92% 8%, rgba(188, 91, 59, 0.04), transparent 60%);
     background-attachment: fixed;
   }
 
@@ -59,8 +59,8 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .glass-card-hover:hover {
-    border-color: rgba(124, 58, 237, 0.35);
-    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
+    border-color: rgba(188, 91, 59, 0.35);
+    box-shadow: 0 8px 24px rgba(188, 91, 59, 0.1);
   }
 
   /* Inset panel inside a card */
@@ -91,22 +91,22 @@
   }
   .glass-input:focus {
     outline: none;
-    border-color: rgba(124, 58, 237, 0.5);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    border-color: rgba(188, 91, 59, 0.5);
+    box-shadow: 0 0 0 3px rgba(188, 91, 59, 0.12);
   }
 
   /* ── Buttons ────────────────────────────────────── */
   .btn-primary {
-    background: #7c3aed;
+    background: #BC5B3B;
     color: #fff;
     font-weight: 600;
     border-radius: 10px;
     border: 1px solid rgba(24, 24, 27, 0.05);
-    box-shadow: 0 1px 2px rgba(124, 58, 237, 0.2);
+    box-shadow: 0 1px 2px rgba(188, 91, 59, 0.2);
     transition: background-color 0.15s ease, transform 0.1s ease;
   }
   .btn-primary:hover {
-    background-color: #6d28d9;
+    background-color: #8F4429;
     transform: translateY(-1px);
   }
   .btn-primary:active {
@@ -145,15 +145,15 @@
   }
 
   .text-gradient {
-    background: linear-gradient(120deg, #7c3aed, #6d28d9 45%, #4c1d95);
+    background: linear-gradient(120deg, #BC5B3B, #8F4429 45%, #6B341F);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .border-glow {
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    box-shadow: inset 0 0 20px rgba(124, 58, 237, 0.04);
+    border: 1px solid rgba(188, 91, 59, 0.3);
+    box-shadow: inset 0 0 20px rgba(188, 91, 59, 0.04);
   }
 
   .bg-card {

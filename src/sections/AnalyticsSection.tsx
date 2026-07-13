@@ -7,7 +7,7 @@ import {
   CreditCard, TrendingDown, TrendingUp, Wallet, PieChart as PieIcon, Calendar, ArrowUpRight,
 } from 'lucide-react';
 
-const COLORS = ['#7c3aed', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#ec4899', '#06b6d4', '#84cc16', '#a855f7', '#ef4444'];
+const COLORS = ['#BC5B3B', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#ec4899', '#06b6d4', '#84cc16', '#a855f7', '#ef4444'];
 
 function formatCurrency(amount: number, currency = 'CAD') {
   return new Intl.NumberFormat('en-CA', { style: 'currency', currency, minimumFractionDigits: 0 }).format(amount);
@@ -78,7 +78,7 @@ export default function AnalyticsSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <p className="font-mono-data text-xs tracking-[0.15em] text-violet-600/80 uppercase mb-2">Analytics</p>
+            <p className="font-mono-data text-xs tracking-[0.15em] text-[#BC5B3B]/80 uppercase mb-2">Analytics</p>
             <h2 className="text-3xl md:text-4xl font-semibold text-zinc-900" style={{ letterSpacing: '-0.01em' }}>
               Spending <span className="text-gradient">Insights</span>
             </h2>
@@ -102,7 +102,7 @@ export default function AnalyticsSection() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
           <div className="glass-card glass-card-hover p-5">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
+              <TrendingUp className="w-4 h-4 text-[#BC5B3B]" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Total Spending</span>
             </div>
             <p className="text-zinc-900 text-2xl font-bold">{formatCurrency(analytics.totalSpending)}</p>
@@ -155,8 +155,8 @@ export default function AnalyticsSection() {
                 <AreaChart data={analytics.dailySpending}>
                   <defs>
                     <linearGradient id="colorSpending" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.25} />
-                      <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#BC5B3B" stopOpacity={0.25} />
+                      <stop offset="95%" stopColor="#BC5B3B" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(24,24,27,0.06)" />
@@ -176,7 +176,7 @@ export default function AnalyticsSection() {
                     labelStyle={tooltipStyle.labelStyle}
                     formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'Spent']}
                   />
-                  <Area type="monotone" dataKey="amount" stroke="#7c3aed" fillOpacity={1} fill="url(#colorSpending)" strokeWidth={2} />
+                  <Area type="monotone" dataKey="amount" stroke="#BC5B3B" fillOpacity={1} fill="url(#colorSpending)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -230,7 +230,7 @@ export default function AnalyticsSection() {
         {hasCreditCards && (
           <div className="mb-10">
             <div className="flex items-center gap-2 mb-6">
-              <CreditCard className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
+              <CreditCard className="w-4 h-4 text-[#BC5B3B]" strokeWidth={1.5} />
               <h3 className="text-xl font-semibold text-zinc-900">Credit Card Breakdown</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -286,7 +286,7 @@ export default function AnalyticsSection() {
         {/* Spending by Account */}
         <div>
           <div className="flex items-center gap-2 mb-6">
-            <ArrowUpRight className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
+            <ArrowUpRight className="w-4 h-4 text-[#BC5B3B]" strokeWidth={1.5} />
             <h3 className="text-xl font-semibold text-zinc-900">Spending by Account</h3>
           </div>
           <div className="glass-card p-6">
@@ -314,8 +314,8 @@ export default function AnalyticsSection() {
                   <Bar dataKey="amount" fill="url(#barGradient)" radius={[0, 10, 10, 0]} barSize={20} />
                   <defs>
                     <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#6d28d9" />
-                      <stop offset="100%" stopColor="#a78bfa" />
+                      <stop offset="0%" stopColor="#8F4429" />
+                      <stop offset="100%" stopColor="#D9906D" />
                     </linearGradient>
                   </defs>
                 </BarChart>

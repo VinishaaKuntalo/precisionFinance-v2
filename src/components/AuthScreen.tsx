@@ -21,7 +21,7 @@ function ApiServerModal({ onClose }: { onClose: () => void }) {
       <div className="glass-modal w-full max-w-sm p-6" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-zinc-900 font-semibold text-sm flex items-center gap-2">
-            <Server className="w-4 h-4 text-violet-600" /> API Server
+            <Server className="w-4 h-4 text-[#BC5B3B]" /> API Server
           </h3>
           <button onClick={onClose} aria-label="Close" className="text-zinc-400 hover:text-zinc-900">
             <X className="w-4 h-4" />
@@ -154,7 +154,7 @@ export default function AuthScreen() {
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div
           className="absolute -top-32 -left-32 w-96 h-96 rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.10), transparent 65%)', filter: 'blur(40px)' }}
+          style={{ background: 'radial-gradient(circle, rgba(188,91,59,0.10), transparent 65%)', filter: 'blur(40px)' }}
         />
         <div
           className="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full"
@@ -168,8 +168,8 @@ export default function AuthScreen() {
             <div
               className="w-9 h-9 flex items-center justify-center rounded-xl"
               style={{
-                background: '#7c3aed',
-                boxShadow: '0 4px 16px rgba(124,58,237,0.3)',
+                background: '#BC5B3B',
+                boxShadow: '0 4px 16px rgba(188,91,59,0.3)',
               }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
@@ -178,7 +178,7 @@ export default function AuthScreen() {
           </div>
           <button
             onClick={() => setApiModalOpen(true)}
-            className="text-zinc-400 hover:text-violet-600 transition-colors p-1.5"
+            className="text-zinc-400 hover:text-[#BC5B3B] transition-colors p-1.5"
             title="API server settings"
             aria-label="API server settings"
           >
@@ -231,7 +231,7 @@ export default function AuthScreen() {
             <div className="mt-4 flex items-center justify-between">
               <button
                 onClick={() => switchMode('forgot')}
-                className="text-zinc-500 text-xs hover:text-violet-600 transition-colors"
+                className="text-zinc-500 text-xs hover:text-[#BC5B3B] transition-colors"
               >
                 Forgot password?
               </button>
@@ -242,7 +242,7 @@ export default function AuthScreen() {
                 onClick={() => switchMode('register')}
                 className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors"
               >
-                Don't have an account? <span className="text-violet-600">Create one</span>
+                Don't have an account? <span className="text-[#BC5B3B]">Create one</span>
               </button>
             </div>
           </>
@@ -308,7 +308,7 @@ export default function AuthScreen() {
                 onClick={() => switchMode('login')}
                 className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors"
               >
-                Already have an account? <span className="text-violet-600">Sign in</span>
+                Already have an account? <span className="text-[#BC5B3B]">Sign in</span>
               </button>
             </div>
           </>

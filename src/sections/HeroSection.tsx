@@ -37,14 +37,14 @@ export default function HeroSection() {
       />
       <div
         className="absolute -top-24 -right-24 w-[32rem] h-[32rem] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.10), transparent 65%)', filter: 'blur(20px)' }}
+        style={{ background: 'radial-gradient(circle, rgba(188,91,59,0.10), transparent 65%)', filter: 'blur(20px)' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr] gap-16 items-center">
           {/* ── Left: copy ────────────────────────────── */}
           <div>
-            <div className="chip font-mono-data tracking-[0.15em] text-violet-700 bg-violet-500/10 uppercase mb-7 inline-flex items-center gap-1.5">
+            <div className="chip font-mono-data tracking-[0.15em] text-[#8F4429] bg-[#C97852]/10 uppercase mb-7 inline-flex items-center gap-1.5">
               <Sparkles className="w-3 h-3" strokeWidth={2} />
               Automated Financial Intelligence
             </div>
@@ -79,11 +79,11 @@ export default function HeroSection() {
 
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
               <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
-                <ShieldCheck className="w-3.5 h-3.5 text-violet-600" strokeWidth={1.75} />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#BC5B3B]" strokeWidth={1.75} />
                 256-bit encryption
               </div>
               <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
-                <CreditCard className="w-3.5 h-3.5 text-violet-600" strokeWidth={1.75} />
+                <CreditCard className="w-3.5 h-3.5 text-[#BC5B3B]" strokeWidth={1.75} />
                 Plaid-powered sync
               </div>
               <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono-data">
@@ -100,7 +100,7 @@ export default function HeroSection() {
           <div className="relative">
             <div
               className="absolute -inset-6 rounded-[28px] opacity-70 pointer-events-none"
-              style={{ background: 'radial-gradient(60% 60% at 50% 40%, rgba(124,58,237,0.10), transparent 70%)' }}
+              style={{ background: 'radial-gradient(60% 60% at 50% 40%, rgba(188,91,59,0.10), transparent 70%)' }}
             />
             <div className="glass-modal relative p-0 overflow-hidden">
               {/* window chrome */}
@@ -135,8 +135,8 @@ export default function HeroSection() {
                         height: `${h}%`,
                         background:
                           i === 11
-                            ? 'linear-gradient(180deg,#a78bfa,#7c3aed)'
-                            : 'rgba(124,58,237,0.14)',
+                            ? 'linear-gradient(180deg,#D9906D,#BC5B3B)'
+                            : 'rgba(188,91,59,0.14)',
                       }}
                     />
                   ))}
