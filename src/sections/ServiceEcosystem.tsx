@@ -43,11 +43,11 @@ export default function ServiceEcosystem() {
     <section id="ecosystem" className="relative w-full">
       <div className="h-[40vh] flex items-end justify-center pb-16">
         <div className="text-center">
-          <p className="font-mono-data text-xs tracking-[0.15em] text-zinc-600 uppercase mb-4">
+          <p className="font-mono-data text-xs tracking-[0.15em] text-zinc-400 uppercase mb-4">
             Service Ecosystem
           </p>
           <h2
-            className="text-4xl md:text-5xl font-semibold text-white"
+            className="text-4xl md:text-5xl font-semibold text-zinc-900"
             style={{ letterSpacing: '-0.01em' }}
           >
             Three Pillars of Control

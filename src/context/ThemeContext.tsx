@@ -1,33 +1,22 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, type ReactNode } from 'react';
 
-type Theme = 'dark' | 'light';
-
+// Precision Finance ships a single light theme. This context is kept as a
+// thin no-op provider so any legacy `useTheme()` callers don't break —
+// there is nothing left to toggle.
 interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
+  theme: 'light';
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem('pf_theme') as Theme;
-    if (stored === 'light' || stored === 'dark') return stored;
-    return 'dark';
-  });
-
   useEffect(() => {
-    document.documentElement.classList.remove('dark', 'light');
-    document.documentElement.classList.add(theme);
-    localStorage.setItem('pf_theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: 'light' }}>
       {children}
     </ThemeContext.Provider>
   );

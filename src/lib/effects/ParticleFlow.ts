@@ -15,6 +15,8 @@ interface ParticleFlowOptions {
   trailLength?: number;
   colors?: string[];
   particleSize?: number;
+  /** Background color the trail fades into — should match the surrounding page background. */
+  trailColor?: string;
 }
 
 const defaultOptions: Required<ParticleFlowOptions> = {
@@ -23,6 +25,7 @@ const defaultOptions: Required<ParticleFlowOptions> = {
   trailLength: 0.2,
   colors: ['#8b5cf6', '#7c3aed', '#4c1d95'],
   particleSize: 1,
+  trailColor: '249, 247, 243',
 };
 
 export class ParticleFlow {
@@ -80,7 +83,7 @@ export class ParticleFlow {
   }
 
   draw() {
-    this.ctx.fillStyle = `rgba(0, 0, 0, ${1 - this.options.trailLength})`;
+    this.ctx.fillStyle = `rgba(${this.options.trailColor}, ${1 - this.options.trailLength})`;
     this.ctx.fillRect(0, 0, this.width, this.height);
 
     for (const p of this.particles) {

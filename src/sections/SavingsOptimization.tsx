@@ -26,24 +26,24 @@ function PayoffCelebration({ visible }: { visible: boolean }) {
     <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
       <div className="text-center animate-in fade-in zoom-in duration-700">
         <div className="relative">
-          <Sparkles className="w-20 h-20 text-violet-400 mx-auto mb-4 animate-pulse" />
+          <Sparkles className="w-20 h-20 text-violet-600 mx-auto mb-4 animate-pulse" />
           <div
-            className="absolute inset-0 blur-3xl opacity-50"
-            style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.4) 0%, transparent 70%)' }}
+            className="absolute inset-0 blur-3xl opacity-40"
+            style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%)' }}
           />
         </div>
-        <h2 className="text-5xl md:text-7xl font-bold text-white mb-2 tracking-tight">
+        <h2 className="text-5xl md:text-7xl font-bold text-zinc-900 mb-2 tracking-tight">
           DEBT FREE!
         </h2>
-        <p className="text-xl text-zinc-400 font-mono-data">
+        <p className="text-xl text-zinc-500 font-mono-data">
           You have officially paid off all credit card balances
         </p>
         <div className="flex items-center justify-center gap-4 mt-6">
-          <div className="flex items-center gap-2 text-violet-400">
+          <div className="flex items-center gap-2 text-violet-600">
             <Flame className="w-5 h-5" />
             <span className="text-sm font-medium">$0.00 remaining</span>
           </div>
-          <div className="flex items-center gap-2 text-green-400">
+          <div className="flex items-center gap-2 text-green-600">
             <Award className="w-5 h-5" />
             <span className="text-sm font-medium">100% complete</span>
           </div>
@@ -65,11 +65,12 @@ export default function SavingsOptimization() {
   useEffect(() => {
     if (canvasRef.current && !particleRef.current) {
       particleRef.current = new ParticleFlow(canvasRef.current, {
-        particleCount: 120,
-        baseSpeed: 1.2,
-        trailLength: 0.15,
-        colors: ['#8b5cf6', '#7c3aed', '#a78bfa', '#4c1d95'],
+        particleCount: 90,
+        baseSpeed: 1.1,
+        trailLength: 0.12,
+        colors: ['#8b5cf6', '#7c3aed', '#a78bfa', '#c4b5fd'],
         particleSize: 2,
+        trailColor: '249, 247, 243',
       });
     }
     return () => {
@@ -132,13 +133,13 @@ export default function SavingsOptimization() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-32">
         <div className="text-center mb-16">
-          <p className="font-mono-data text-xs tracking-[0.15em] text-zinc-600 uppercase mb-4">
+          <p className="font-mono-data text-xs tracking-[0.15em] text-zinc-400 uppercase mb-4">
             Savings Optimization
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4" style={{ letterSpacing: '-0.01em' }}>
+          <h2 className="text-4xl md:text-5xl font-semibold text-zinc-900 mb-4" style={{ letterSpacing: '-0.01em' }}>
             Visualize Your Freedom
           </h2>
-          <p className="text-zinc-400 max-w-md mx-auto">
+          <p className="text-zinc-500 max-w-md mx-auto">
             Every payment brings you closer. Watch your debt shrink and your savings grow
             in real-time.
           </p>
@@ -166,13 +167,13 @@ export default function SavingsOptimization() {
           {/* Center - Payoff Progress */}
           <div className="glass-card p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Target className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
+              <Target className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Debt Payoff Progress</span>
             </div>
 
             <div className="text-center mb-8">
-              <p className="text-5xl font-bold text-white mb-1">{formatCurrency(totalBalance)}</p>
-              <p className="text-zinc-500 text-xs font-mono-data">
+              <p className="text-5xl font-bold text-zinc-900 mb-1">{formatCurrency(totalBalance)}</p>
+              <p className="text-zinc-400 text-xs font-mono-data">
                 {accountCount > 0 ? `remaining across ${accountCount} accounts` : 'remaining across all cards'}
               </p>
             </div>
@@ -183,24 +184,23 @@ export default function SavingsOptimization() {
                 return (
                   <div key={goal.id}>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-white text-sm">{goal.name}</span>
+                      <span className="text-zinc-900 text-sm">{goal.name}</span>
                       <span className="text-zinc-500 text-xs font-mono-data">
                         {formatCurrency(goal.current)} / {formatCurrency(goal.target)}
                       </span>
                     </div>
-                    <div className="w-full h-2 bg-white/5 overflow-hidden rounded-full">
+                    <div className="w-full h-2 bg-zinc-100 overflow-hidden rounded-full">
                       <div
                         className="h-full transition-all duration-1000 rounded-full"
                         style={{
                           width: `${Math.min(pct, 100)}%`,
                           background: 'linear-gradient(90deg,#a78bfa,#7c3aed)',
-                          boxShadow: '0 0 10px rgba(124,58,237,0.4)',
                         }}
                       />
                     </div>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-zinc-600 text-xs">{pct.toFixed(0)}% complete</span>
-                      <span className="text-zinc-600 text-xs font-mono-data">Due {goal.dueDate}</span>
+                      <span className="text-zinc-400 text-xs">{pct.toFixed(0)}% complete</span>
+                      <span className="text-zinc-400 text-xs font-mono-data">Due {goal.dueDate}</span>
                     </div>
                   </div>
                 );
@@ -261,9 +261,9 @@ export default function SavingsOptimization() {
               key={i}
               className="glass-card glass-card-hover p-5"
             >
-              <h4 className="text-white text-sm font-medium mb-2">{tip.title}</h4>
+              <h4 className="text-zinc-900 text-sm font-medium mb-2">{tip.title}</h4>
               <p className="text-zinc-500 text-xs leading-relaxed mb-3">{tip.desc}</p>
-              <button className="text-violet-500 text-xs font-medium hover:text-violet-400 transition-colors">
+              <button className="text-violet-600 text-xs font-medium hover:text-violet-500 transition-colors">
                 {tip.action} →
               </button>
             </div>
@@ -291,11 +291,11 @@ function DashboardCard({
       className="glass-card glass-card-hover p-5"
     >
       <div className="flex items-center gap-2 mb-4">
-        <Icon className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
+        <Icon className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
         <span className="text-zinc-500 text-xs font-mono-data uppercase">{title}</span>
       </div>
-      <p className="text-white text-2xl font-bold mb-1">{value}</p>
-      <p className="text-zinc-600 text-xs">{subtitle}</p>
+      <p className="text-zinc-900 text-2xl font-bold mb-1">{value}</p>
+      <p className="text-zinc-400 text-xs">{subtitle}</p>
     </div>
   );
 }

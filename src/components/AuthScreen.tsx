@@ -15,15 +15,15 @@ function ApiServerModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+      style={{ backgroundColor: 'rgba(24,24,27,0.5)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       <div className="glass-modal w-full max-w-sm p-6" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-white font-semibold text-sm flex items-center gap-2">
-            <Server className="w-4 h-4 text-violet-400" /> API Server
+          <h3 className="text-zinc-900 font-semibold text-sm flex items-center gap-2">
+            <Server className="w-4 h-4 text-violet-600" /> API Server
           </h3>
-          <button onClick={onClose} aria-label="Close" className="text-zinc-500 hover:text-white">
+          <button onClick={onClose} aria-label="Close" className="text-zinc-400 hover:text-zinc-900">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -38,7 +38,7 @@ function ApiServerModal({ onClose }: { onClose: () => void }) {
           placeholder="https://your-backend.example.com"
           className="w-full glass-input text-sm px-3 py-2 mb-2"
         />
-        <p className="text-zinc-600 text-xs mb-4">
+        <p className="text-zinc-500 text-xs mb-4">
           Where this app's API lives (e.g. your Railway/Render URL). Saved on this device.
         </p>
         <button onClick={handleSave} className="w-full btn-primary text-sm py-2.5">
@@ -154,11 +154,11 @@ export default function AuthScreen() {
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div
           className="absolute -top-32 -left-32 w-96 h-96 rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.16), transparent 65%)', filter: 'blur(40px)' }}
+          style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.10), transparent 65%)', filter: 'blur(40px)' }}
         />
         <div
           className="absolute -bottom-40 -right-24 w-[28rem] h-[28rem] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 65%)', filter: 'blur(48px)' }}
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.08), transparent 65%)', filter: 'blur(48px)' }}
         />
       </div>
 
@@ -169,7 +169,7 @@ export default function AuthScreen() {
               className="w-9 h-9 flex items-center justify-center rounded-xl"
               style={{
                 background: '#7c3aed',
-                boxShadow: '0 4px 16px rgba(124,58,237,0.4)',
+                boxShadow: '0 4px 16px rgba(124,58,237,0.3)',
               }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
@@ -178,7 +178,7 @@ export default function AuthScreen() {
           </div>
           <button
             onClick={() => setApiModalOpen(true)}
-            className="text-zinc-600 hover:text-violet-400 transition-colors p-1.5"
+            className="text-zinc-400 hover:text-violet-600 transition-colors p-1.5"
             title="API server settings"
             aria-label="API server settings"
           >
@@ -189,7 +189,7 @@ export default function AuthScreen() {
         {/* ─── LOGIN ─── */}
         {mode === 'login' && (
           <>
-            <h2 className="text-white text-2xl font-semibold mb-1">
+            <h2 className="text-zinc-900 text-2xl font-semibold mb-1">
               Welcome <span className="text-gradient">back</span>
             </h2>
             <p className="text-zinc-500 text-xs mb-6">Sign in to your account</p>
@@ -221,7 +221,7 @@ export default function AuthScreen() {
                 />
               </div>
 
-              {error && <p role="alert" className="text-red-400 text-xs">{error}</p>}
+              {error && <p role="alert" className="text-red-600 text-xs">{error}</p>}
 
               <button type="submit" disabled={loading} className="w-full btn-primary disabled:opacity-50 text-sm py-2.5">
                 {loading ? 'Please wait...' : 'Sign In'}
@@ -231,7 +231,7 @@ export default function AuthScreen() {
             <div className="mt-4 flex items-center justify-between">
               <button
                 onClick={() => switchMode('forgot')}
-                className="text-zinc-500 text-xs hover:text-violet-400 transition-colors"
+                className="text-zinc-500 text-xs hover:text-violet-600 transition-colors"
               >
                 Forgot password?
               </button>
@@ -240,9 +240,9 @@ export default function AuthScreen() {
             <div className="mt-4 text-center">
               <button
                 onClick={() => switchMode('register')}
-                className="text-zinc-500 text-xs hover:text-white transition-colors"
+                className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors"
               >
-                Don't have an account? <span className="text-violet-400">Create one</span>
+                Don't have an account? <span className="text-violet-600">Create one</span>
               </button>
             </div>
           </>
@@ -251,7 +251,7 @@ export default function AuthScreen() {
         {/* ─── REGISTER ─── */}
         {mode === 'register' && (
           <>
-            <h2 className="text-white text-2xl font-semibold mb-1">
+            <h2 className="text-zinc-900 text-2xl font-semibold mb-1">
               Create <span className="text-gradient">account</span>
             </h2>
             <p className="text-zinc-500 text-xs mb-6">Get started with your personal dashboard</p>
@@ -293,10 +293,10 @@ export default function AuthScreen() {
                   required
                   minLength={6}
                 />
-                <p className="text-zinc-600 text-[11px] mt-1">At least 6 characters</p>
+                <p className="text-zinc-400 text-[11px] mt-1">At least 6 characters</p>
               </div>
 
-              {error && <p role="alert" className="text-red-400 text-xs">{error}</p>}
+              {error && <p role="alert" className="text-red-600 text-xs">{error}</p>}
 
               <button type="submit" disabled={loading} className="w-full btn-primary disabled:opacity-50 text-sm py-2.5">
                 {loading ? 'Please wait...' : 'Create Account'}
@@ -306,9 +306,9 @@ export default function AuthScreen() {
             <div className="mt-6 text-center">
               <button
                 onClick={() => switchMode('login')}
-                className="text-zinc-500 text-xs hover:text-white transition-colors"
+                className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors"
               >
-                Already have an account? <span className="text-violet-400">Sign in</span>
+                Already have an account? <span className="text-violet-600">Sign in</span>
               </button>
             </div>
           </>
@@ -319,12 +319,12 @@ export default function AuthScreen() {
           <>
             <button
               onClick={() => switchMode('login')}
-              className="text-zinc-500 text-xs hover:text-white transition-colors flex items-center gap-1 mb-4"
+              className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors flex items-center gap-1 mb-4"
             >
               <ArrowLeft className="w-3 h-3" /> Back to login
             </button>
 
-            <h2 className="text-white text-2xl font-semibold mb-1">
+            <h2 className="text-zinc-900 text-2xl font-semibold mb-1">
               Reset <span className="text-gradient">password</span>
             </h2>
             <p className="text-zinc-500 text-xs mb-6">Enter your email to receive a reset link</p>
@@ -333,7 +333,7 @@ export default function AuthScreen() {
               <div>
                 <label htmlFor="forgot-email" className={labelClass}>Email</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-zinc-600 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     id="forgot-email"
                     type="email"
@@ -346,10 +346,10 @@ export default function AuthScreen() {
                 </div>
               </div>
 
-              {error && <p role="alert" className="text-red-400 text-xs">{error}</p>}
+              {error && <p role="alert" className="text-red-600 text-xs">{error}</p>}
               {success && (
                 <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl">
-                  <p className="text-green-400 text-xs flex items-start gap-2">
+                  <p className="text-green-700 text-xs flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                     <span className="break-all">{success}</span>
                   </p>
@@ -372,12 +372,12 @@ export default function AuthScreen() {
           <>
             <button
               onClick={() => switchMode('login')}
-              className="text-zinc-500 text-xs hover:text-white transition-colors flex items-center gap-1 mb-4"
+              className="text-zinc-500 text-xs hover:text-zinc-900 transition-colors flex items-center gap-1 mb-4"
             >
               <ArrowLeft className="w-3 h-3" /> Back to login
             </button>
 
-            <h2 className="text-white text-2xl font-semibold mb-1">
+            <h2 className="text-zinc-900 text-2xl font-semibold mb-1">
               New <span className="text-gradient">password</span>
             </h2>
             <p className="text-zinc-500 text-xs mb-6">Enter your new password below</p>
@@ -386,7 +386,7 @@ export default function AuthScreen() {
               <div>
                 <label htmlFor="reset-token" className={labelClass}>Reset Token</label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-zinc-600 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Lock className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     id="reset-token"
                     type="text"
@@ -400,7 +400,7 @@ export default function AuthScreen() {
               <div>
                 <label htmlFor="reset-password" className={labelClass}>New Password</label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-zinc-600 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Lock className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     id="reset-password"
                     type="password"
@@ -414,10 +414,10 @@ export default function AuthScreen() {
                 </div>
               </div>
 
-              {error && <p role="alert" className="text-red-400 text-xs">{error}</p>}
+              {error && <p role="alert" className="text-red-600 text-xs">{error}</p>}
               {success && (
                 <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl">
-                  <p className="text-green-400 text-xs flex items-center gap-2">
+                  <p className="text-green-700 text-xs flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" />
                     {success}
                   </p>

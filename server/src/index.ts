@@ -771,9 +771,92 @@ app.get('/api/payments/upcoming', authMiddleware, (req: AuthenticatedRequest, re
   res.json(upcoming);
 });
 
-// ─── Due-date reminder emails (triggered by an external daily scheduler) ─
-// Protected by a shared secret rather than JWT since it's called by a cron
-// job / scheduled task, not a logged-in user in the browser.
+// ─── Due-date reminder emails ─────────────────────────
+// Dynamic per-user: every active payment_schedules row is joined against its
+// owning `users` row, so each reminder email is sent to whichever address
+// that user registered with — nothing here is hardcoded to a single inbox.
+// New users automatically get reminders the moment they set a due day on
+// an account; no config change is needed per user.
+//
+// runReminderCheck() is shared by two triggers:
+//   1. POST /api/cron/check-reminders — for an external scheduler (GitHub
+//      Actions, Render/Railway cron, system crontab, etc.), protected by a
+//      shared secret since it's not a logged-in browser request.
+//   2. An in-process interval below, so the app "just works" out of the box
+//      on a single server without requiring any external cron infra.
+// Both paths are idempotent: a schedule is only emailed once per due date
+// (tracked via last_reminder_sent), so overlapping triggers never double-send.
+
+async function runReminderCheck() {
+  const now = new Date();
+  const currentDay = now.getDate();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  const schedules = db.prepare(`
+    SELECT ps.*, a.name as account_name, a.mask, a.balance_current, a.balance_limit, a.currency_code,
+           pi.institution_name, u.email as user_email
+    FROM payment_schedules ps
+    JOIN accounts a ON ps.account_id = a.id
+    JOIN plaid_items pi ON a.item_id = pi.id
+    JOIN users u ON ps.user_id = u.id
+    WHERE ps.status = 'active'
+  `).all() as any[];
+
+  const dueSoonByUser = new Map<string, { email: string; cards: any[] }>();
+
+  for (const s of schedules) {
+    let dueMonth = currentMonth;
+    let dueYear = currentYear;
+    if (s.due_day < currentDay) {
+      dueMonth++;
+      if (dueMonth > 11) {
+        dueMonth = 0;
+        dueYear++;
+      }
+    }
+    const dueDate = new Date(dueYear, dueMonth, s.due_day);
+    const daysUntilDue = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    const isOverdue = daysUntilDue < 0;
+    const isUrgent = daysUntilDue <= (s.reminder_days ?? 3) && daysUntilDue >= 0;
+    const dueDateStr = dueDate.toISOString().split('T')[0];
+
+    if (!isOverdue && !isUrgent) continue;
+    // Already emailed for this exact due date — skip until the next cycle.
+    if (s.last_reminder_sent === dueDateStr) continue;
+
+    // s.user_email is looked up dynamically per schedule owner — this is
+    // what makes reminders work for every registered user, not just one.
+    const entry = dueSoonByUser.get(s.user_email) || { email: s.user_email, cards: [] };
+    entry.cards.push({
+      scheduleId: s.id,
+      accountName: s.account_name,
+      institutionName: s.institution_name,
+      mask: s.mask,
+      amount: s.minimum_payment || s.statement_balance || 0,
+      currency: s.currency_code || 'CAD',
+      dueDate: dueDateStr,
+      daysUntilDue,
+      isOverdue,
+    });
+    dueSoonByUser.set(s.user_email, entry);
+  }
+
+  let emailsSent = 0;
+  const markSent = db.prepare(`UPDATE payment_schedules SET last_reminder_sent = ? WHERE id = ?`);
+
+  for (const { email, cards } of dueSoonByUser.values()) {
+    const result = await sendDueDateReminderEmail(email, cards);
+    if (result.sent || result.logged) {
+      emailsSent++;
+      for (const c of cards) {
+        markSent.run(c.dueDate, c.scheduleId);
+      }
+    }
+  }
+
+  return { checked: schedules.length, usersNotified: dueSoonByUser.size, emailsSent };
+}
 
 app.post('/api/cron/check-reminders', async (req, res) => {
   const secret = req.headers['x-cron-secret'];
@@ -783,72 +866,8 @@ app.post('/api/cron/check-reminders', async (req, res) => {
   }
 
   try {
-    const now = new Date();
-    const currentDay = now.getDate();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-
-    const schedules = db.prepare(`
-      SELECT ps.*, a.name as account_name, a.mask, a.balance_current, a.balance_limit, a.currency_code,
-             pi.institution_name, u.email as user_email
-      FROM payment_schedules ps
-      JOIN accounts a ON ps.account_id = a.id
-      JOIN plaid_items pi ON a.item_id = pi.id
-      JOIN users u ON ps.user_id = u.id
-      WHERE ps.status = 'active'
-    `).all() as any[];
-
-    const dueSoonByUser = new Map<string, { email: string; cards: any[] }>();
-
-    for (const s of schedules) {
-      let dueMonth = currentMonth;
-      let dueYear = currentYear;
-      if (s.due_day < currentDay) {
-        dueMonth++;
-        if (dueMonth > 11) {
-          dueMonth = 0;
-          dueYear++;
-        }
-      }
-      const dueDate = new Date(dueYear, dueMonth, s.due_day);
-      const daysUntilDue = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-      const isOverdue = daysUntilDue < 0;
-      const isUrgent = daysUntilDue <= (s.reminder_days ?? 3) && daysUntilDue >= 0;
-      const dueDateStr = dueDate.toISOString().split('T')[0];
-
-      if (!isOverdue && !isUrgent) continue;
-      // Already emailed for this exact due date — skip until the next cycle.
-      if (s.last_reminder_sent === dueDateStr) continue;
-
-      const entry = dueSoonByUser.get(s.user_email) || { email: s.user_email, cards: [] };
-      entry.cards.push({
-        scheduleId: s.id,
-        accountName: s.account_name,
-        institutionName: s.institution_name,
-        mask: s.mask,
-        amount: s.minimum_payment || s.statement_balance || 0,
-        currency: s.currency_code || 'CAD',
-        dueDate: dueDateStr,
-        daysUntilDue,
-        isOverdue,
-      });
-      dueSoonByUser.set(s.user_email, entry);
-    }
-
-    let emailsSent = 0;
-    const markSent = db.prepare(`UPDATE payment_schedules SET last_reminder_sent = ? WHERE id = ?`);
-
-    for (const { email, cards } of dueSoonByUser.values()) {
-      const result = await sendDueDateReminderEmail(email, cards);
-      if (result.sent || result.logged) {
-        emailsSent++;
-        for (const c of cards) {
-          markSent.run(c.dueDate, c.scheduleId);
-        }
-      }
-    }
-
-    res.json({ checked: schedules.length, usersNotified: dueSoonByUser.size, emailsSent });
+    const result = await runReminderCheck();
+    res.json(result);
   } catch (err: any) {
     console.error('Reminder check error:', err.message);
     res.status(500).json({ error: 'Failed to check reminders' });
@@ -862,3 +881,30 @@ app.listen(PORT, () => {
   console.log(`Precision Finance server running on port ${PORT}`);
   console.log(`Environment: ${process.env.PLAID_ENV || 'sandbox'}`);
 });
+
+// Built-in scheduler so due-date reminders work for every user without
+// requiring an external cron job. Runs shortly after boot, then on a fixed
+// interval (default every 6 hours). Safe to run alongside an external
+// cron hitting /api/cron/check-reminders too — sends are deduplicated by
+// last_reminder_sent, so nobody gets double-emailed.
+const REMINDER_CHECK_INTERVAL_MS = process.env.REMINDER_CHECK_INTERVAL_MS
+  ? Number(process.env.REMINDER_CHECK_INTERVAL_MS)
+  : 6 * 60 * 60 * 1000;
+
+if (REMINDER_CHECK_INTERVAL_MS > 0) {
+  setTimeout(() => {
+    runReminderCheck()
+      .then((r) => console.log(`[reminders] startup check: ${r.emailsSent} email(s) sent to ${r.usersNotified} user(s)`))
+      .catch((err) => console.error('[reminders] startup check failed:', err.message));
+  }, 15_000);
+
+  setInterval(() => {
+    runReminderCheck()
+      .then((r) => {
+        if (r.emailsSent > 0) {
+          console.log(`[reminders] scheduled check: ${r.emailsSent} email(s) sent to ${r.usersNotified} user(s)`);
+        }
+      })
+      .catch((err) => console.error('[reminders] scheduled check failed:', err.message));
+  }, REMINDER_CHECK_INTERVAL_MS);
+}

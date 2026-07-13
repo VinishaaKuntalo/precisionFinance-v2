@@ -157,19 +157,19 @@ function PaymentScheduleModal({
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+      style={{ backgroundColor: 'rgba(24,24,27,0.5)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       <div
         className="glass-modal w-full max-w-md"
                onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-5 border-b border-white/10 flex items-center justify-between">
+        <div className="p-5 border-b border-zinc-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-violet-500" />
-            <h3 className="text-white font-semibold text-sm">Payment Schedule</h3>
+            <Calendar className="w-4 h-4 text-violet-600" />
+            <h3 className="text-zinc-900 font-semibold text-sm">Payment Schedule</h3>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white">
+          <button onClick={onClose} className="text-zinc-400 hover:text-zinc-900">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -178,12 +178,12 @@ function PaymentScheduleModal({
           <div className="flex items-center gap-3 mb-5">
             <div
               className="w-8 h-8 flex items-center justify-center text-white font-bold text-[10px]"
-              style={{ backgroundColor: getCardColor(account.type, account.subtype), borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.4)' }}
+              style={{ backgroundColor: getCardColor(account.type, account.subtype), borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
             >
               {getCardLogo(account.institution_name, account.type)}
             </div>
             <div>
-              <p className="text-white text-sm font-medium">{account.institution_name}</p>
+              <p className="text-zinc-900 text-sm font-medium">{account.institution_name}</p>
               <p className="text-zinc-500 text-xs font-mono-data">{account.name} • **** {account.mask || '0000'}</p>
             </div>
           </div>
@@ -253,9 +253,9 @@ function PaymentScheduleModal({
                 id="autopay"
                 checked={autopay}
                 onChange={(e) => setAutopay(e.target.checked)}
-                className="w-4 h-4 accent-violet-500"
+                className="w-4 h-4 accent-violet-600"
               />
-              <label htmlFor="autopay" className="text-white text-sm">
+              <label htmlFor="autopay" className="text-zinc-900 text-sm">
                 Autopay enabled
               </label>
             </div>
@@ -272,7 +272,7 @@ function PaymentScheduleModal({
                 <button
                   type="button"
                   onClick={onDelete}
-                  className="bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2.5 transition-colors"
+                  className="bg-red-500/10 hover:bg-red-500/20 text-red-600 px-4 py-2.5 transition-colors rounded-lg"
                                  >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -306,29 +306,29 @@ function CardDetailModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
+      style={{ backgroundColor: 'rgba(24,24,27,0.45)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       <div
         className="glass-modal w-full max-w-lg max-h-[80vh] overflow-y-auto"
                onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 border-b border-white/10 flex items-center justify-between">
+        <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
               className="w-10 h-10 flex items-center justify-center text-white font-bold text-xs"
-              style={{ backgroundColor: getCardColor(account.type, account.subtype), borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.4)' }}
+              style={{ backgroundColor: getCardColor(account.type, account.subtype), borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
             >
               {getCardLogo(account.institution_name, account.type)}
             </div>
             <div>
-              <h3 className="text-white font-semibold text-lg">{account.name}</h3>
+              <h3 className="text-zinc-900 font-semibold text-lg">{account.name}</h3>
               <p className="text-zinc-500 text-xs font-mono-data">
                 {account.institution_name} • **** {account.mask || '0000'}
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-zinc-400 hover:text-zinc-900 transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -339,7 +339,7 @@ function CardDetailModal({
               <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">
                 {isCredit ? 'Current Balance' : 'Available Balance'}
               </p>
-              <p className="text-white text-2xl font-bold">
+              <p className="text-zinc-900 text-2xl font-bold">
                 {formatCurrency(account.balance_current, account.currency_code)}
               </p>
             </div>
@@ -347,7 +347,7 @@ function CardDetailModal({
               <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">
                 {isCredit ? 'Available Credit' : 'Total Balance'}
               </p>
-              <p className="text-green-400 text-2xl font-bold">
+              <p className="text-green-600 text-2xl font-bold">
                 {formatCurrency(
                   isCredit ? account.balance_available : account.balance_current,
                   account.currency_code
@@ -357,14 +357,14 @@ function CardDetailModal({
             {isCredit && (
               <div className="glass-inset p-4">
                 <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Credit Limit</p>
-                <p className="text-white text-lg font-semibold">
+                <p className="text-zinc-900 text-lg font-semibold">
                   {formatCurrency(account.balance_limit, account.currency_code)}
                 </p>
               </div>
             )}
             <div className="glass-inset p-4">
               <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Type</p>
-              <p className="text-white text-lg font-semibold capitalize">
+              <p className="text-zinc-900 text-lg font-semibold capitalize">
                 {account.subtype || account.type}
               </p>
             </div>
@@ -374,12 +374,12 @@ function CardDetailModal({
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-violet-500" />
+                <Calendar className="w-4 h-4 text-violet-600" />
                 <p className="text-zinc-500 text-xs font-mono-data uppercase">Payment Schedule</p>
               </div>
               <button
                 onClick={() => onEditSchedule(account)}
-                className="text-violet-500 text-xs font-medium hover:text-violet-400 transition-colors flex items-center gap-1"
+                className="text-violet-600 text-xs font-medium hover:text-violet-500 transition-colors flex items-center gap-1"
               >
                 <Settings className="w-3 h-3" />
                 {existingSchedule ? 'Edit' : 'Set Schedule'}
@@ -390,23 +390,23 @@ function CardDetailModal({
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Due Date</p>
-                    <p className="text-white text-lg font-semibold">Day {existingSchedule.due_day}</p>
+                    <p className="text-zinc-900 text-lg font-semibold">Day {existingSchedule.due_day}</p>
                   </div>
                   <div>
                     <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Min. Payment</p>
-                    <p className="text-white text-lg font-semibold">
+                    <p className="text-zinc-900 text-lg font-semibold">
                       {formatCurrency(existingSchedule.minimum_payment, account.currency_code)}
                     </p>
                   </div>
                   <div>
                     <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Reminder</p>
-                    <p className="text-white text-sm font-medium">
+                    <p className="text-zinc-900 text-sm font-medium">
                       {existingSchedule.reminder_days} days before
                     </p>
                   </div>
                   <div>
                     <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">Autopay</p>
-                    <p className={existingSchedule.autopay_enabled ? 'text-green-400 text-sm font-medium' : 'text-zinc-500 text-sm font-medium'}>
+                    <p className={existingSchedule.autopay_enabled ? 'text-green-600 text-sm font-medium' : 'text-zinc-500 text-sm font-medium'}>
                       {existingSchedule.autopay_enabled ? 'Enabled' : 'Off'}
                     </p>
                   </div>
@@ -417,7 +417,7 @@ function CardDetailModal({
                 <p className="text-zinc-500 text-xs mb-2">No payment schedule set for this account</p>
                 <button
                   onClick={() => onEditSchedule(account)}
-                  className="text-violet-500 text-xs font-medium hover:text-violet-400 transition-colors"
+                  className="text-violet-600 text-xs font-medium hover:text-violet-500 transition-colors"
                 >
                   + Set Payment Schedule
                 </button>
@@ -429,24 +429,24 @@ function CardDetailModal({
             <p className="text-zinc-500 text-xs font-mono-data uppercase mb-3">Recent Transactions</p>
             <div className="space-y-2">
               {accountTx.length === 0 && (
-                <p className="text-zinc-600 text-sm">No transactions yet. Click Sync to pull data.</p>
+                <p className="text-zinc-500 text-sm">No transactions yet. Click Sync to pull data.</p>
               )}
               {accountTx.slice(0, 10).map((tx) => (
-                <div key={tx.id} className="flex items-center justify-between py-2 border-b border-white/5">
+                <div key={tx.id} className="flex items-center justify-between py-2 border-b border-zinc-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-white/5 flex items-center justify-center rounded-lg">
+                    <div className="w-8 h-8 bg-zinc-50 border border-zinc-100 flex items-center justify-center rounded-lg">
                       {tx.amount > 0 ? (
-                        <ArrowUpRight className="w-4 h-4 text-red-400" />
+                        <ArrowUpRight className="w-4 h-4 text-red-500" />
                       ) : (
-                        <ArrowDownRight className="w-4 h-4 text-green-400" />
+                        <ArrowDownRight className="w-4 h-4 text-green-600" />
                       )}
                     </div>
                     <div>
-                      <p className="text-white text-sm">{tx.name}</p>
-                      <p className="text-zinc-600 text-xs">{tx.category || tx.account_type}</p>
+                      <p className="text-zinc-900 text-sm">{tx.name}</p>
+                      <p className="text-zinc-500 text-xs">{tx.category || tx.account_type}</p>
                     </div>
                   </div>
-                  <p className={`text-sm font-mono-data font-medium ${tx.amount < 0 ? 'text-green-400' : 'text-white'}`}>
+                  <p className={`text-sm font-mono-data font-medium ${tx.amount < 0 ? 'text-green-600' : 'text-zinc-900'}`}>
                     {tx.amount < 0 ? '' : '+'}
                     {formatCurrency(Math.abs(tx.amount), account.currency_code)}
                   </p>
@@ -571,7 +571,7 @@ export default function DashboardSection() {
       if (err?.error_code) {
         const errorCode = err.error_code;
         let userMessage = `Plaid Error: ${err.error_message || errorCode}`;
-        
+
         // OAuth-specific error handling
         if (errorCode === 'OAUTH_NEEDED' || errorCode === 'INSTITUTION_NOT_ENABLED') {
           userMessage = 'Wealthsimple requires OAuth. Please ensure: (1) OAuth is enabled in your Plaid Dashboard, (2) Your redirect URI is registered, (3) Try using the Plaid Sandbox test credentials first.';
@@ -582,7 +582,7 @@ export default function DashboardSection() {
         } else if (errorCode === 'USER_PERMISSION_REVOKED') {
           userMessage = 'Access was denied. Please check your Wealthsimple account permissions.';
         }
-        
+
         setPlaidError(userMessage);
         console.log('Plaid exit:', { errorCode, metadata });
       }
@@ -696,36 +696,36 @@ export default function DashboardSection() {
       title: 'Credit Cards',
       category: 'credit' as const,
       accounts: accounts.filter((a) => getAccountCategory(a) === 'credit'),
-      headerColor: 'text-red-500',
-      badgeClass: 'bg-red-500/10 text-red-500',
+      headerColor: 'text-red-600',
+      badgeClass: 'bg-red-500/10 text-red-600',
     },
     {
       title: 'Line of Credit',
       category: 'line-of-credit' as const,
       accounts: accounts.filter((a) => getAccountCategory(a) === 'line-of-credit'),
-      headerColor: 'text-orange-500',
-      badgeClass: 'bg-orange-500/10 text-orange-500',
+      headerColor: 'text-orange-600',
+      badgeClass: 'bg-orange-500/10 text-orange-600',
     },
     {
       title: 'Checking',
       category: 'checking' as const,
       accounts: accounts.filter((a) => getAccountCategory(a) === 'checking'),
-      headerColor: 'text-blue-500',
-      badgeClass: 'bg-blue-500/10 text-blue-500',
+      headerColor: 'text-blue-600',
+      badgeClass: 'bg-blue-500/10 text-blue-600',
     },
     {
       title: 'Savings',
       category: 'savings' as const,
       accounts: accounts.filter((a) => getAccountCategory(a) === 'savings'),
-      headerColor: 'text-green-500',
-      badgeClass: 'bg-green-500/10 text-green-500',
+      headerColor: 'text-green-600',
+      badgeClass: 'bg-green-500/10 text-green-600',
     },
     {
       title: 'Other Accounts',
       category: 'other' as const,
       accounts: accounts.filter((a) => getAccountCategory(a) === 'other'),
       headerColor: 'text-zinc-500',
-      badgeClass: 'bg-zinc-500/10 text-zinc-500',
+      badgeClass: 'bg-zinc-500/10 text-zinc-600',
     },
   ].filter((g) => g.accounts.length > 0);
 
@@ -733,15 +733,15 @@ export default function DashboardSection() {
     <section id="dashboard" className="relative w-full py-32">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
-          <p className="font-mono-data text-xs tracking-[0.15em] text-violet-400/70 uppercase mb-4">Live Dashboard</p>
-          <h2 className="text-4xl md:text-5xl font-semibold text-white" style={{ letterSpacing: '-0.01em' }}>
+          <p className="font-mono-data text-xs tracking-[0.15em] text-violet-600/80 uppercase mb-4">Live Dashboard</p>
+          <h2 className="text-4xl md:text-5xl font-semibold text-zinc-900" style={{ letterSpacing: '-0.01em' }}>
             Your Financial <span className="text-gradient">Command Center</span>
           </h2>
         </div>
 
         {/* Month Filter */}
         <div className="flex items-center gap-3 mb-6">
-          <Calendar className="w-4 h-4 text-zinc-500" />
+          <Calendar className="w-4 h-4 text-zinc-400" />
           <span className="text-zinc-500 text-xs font-mono-data uppercase">Period</span>
           <select
             value={selectedMonth}
@@ -758,23 +758,23 @@ export default function DashboardSection() {
 
         {/* Error Banner */}
         {(error || plaidError) && (
-          <div className="bg-red-500/10 border border-red-500/20 p-4 mb-6 rounded-2xl backdrop-blur-md">
+          <div className="bg-red-500/10 border border-red-500/20 p-4 mb-6 rounded-2xl">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
-                <p className="text-red-400 text-sm font-medium">{plaidError || error}</p>
+                <p className="text-red-600 text-sm font-medium">{plaidError || error}</p>
                 {plaidError && (plaidError.includes('OAuth') || plaidError.includes('Wealthsimple')) && (
                   <div className="mt-2 space-y-1 text-zinc-500 text-xs">
-                    <p><strong className="text-zinc-400">To fix Wealthsimple / OAuth institutions:</strong></p>
+                    <p><strong className="text-zinc-700">To fix Wealthsimple / OAuth institutions:</strong></p>
                     <ol className="list-decimal list-inside space-y-0.5 ml-1">
-                      <li>Go to <a href="https://dashboard.plaid.com" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:underline">Plaid Dashboard</a> → API → OAuth</li>
-                      <li>Add your app URL as a redirect URI: <code className="text-zinc-400">https://precisionfinance-ca.netlify.app/</code></li>
-                      <li>Also add for local testing: <code className="text-zinc-400">http://localhost:3000</code></li>
+                      <li>Go to <a href="https://dashboard.plaid.com" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">Plaid Dashboard</a> → API → OAuth</li>
+                      <li>Add your app URL as a redirect URI: <code className="text-zinc-600">https://precisionfinance-ca.netlify.app/</code></li>
+                      <li>Also add for local testing: <code className="text-zinc-600">http://localhost:3000</code></li>
                       <li>Save and wait ~5 minutes for Plaid to propagate</li>
                       <li>Restart your backend server</li>
                       <li>Try linking again — you'll be redirected to Wealthsimple to log in</li>
                     </ol>
-                    <p className="mt-1 text-zinc-600">Note: Your MFA/2FA happens on Wealthsimple's website, not inside this app.</p>
+                    <p className="mt-1 text-zinc-500">Note: Your MFA/2FA happens on Wealthsimple's website, not inside this app.</p>
                   </div>
                 )}
               </div>
@@ -786,31 +786,31 @@ export default function DashboardSection() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
           <div className="glass-card glass-card-hover p-5">
             <div className="flex items-center gap-2 mb-3">
-              <CardIcon className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
+              <CardIcon className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Total Balance</span>
             </div>
-            <p className="text-white text-2xl font-bold">{formatCurrency(totalBalance)}</p>
-            <p className="text-zinc-600 text-xs font-mono-data mt-1">across {accounts.length} accounts</p>
+            <p className="text-zinc-900 text-2xl font-bold">{formatCurrency(totalBalance)}</p>
+            <p className="text-zinc-400 text-xs font-mono-data mt-1">across {accounts.length} accounts</p>
           </div>
           <div className="glass-card glass-card-hover p-5">
             <div className="flex items-center gap-2 mb-3">
               <TrendingDown className="w-4 h-4 text-orange-500" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Available Credit</span>
             </div>
-            <p className="text-green-400 text-2xl font-bold">{formatCurrency(totalAvailable)}</p>
-            <p className="text-zinc-600 text-xs font-mono-data mt-1">{utilizationRate.toFixed(1)}% utilized</p>
+            <p className="text-green-600 text-2xl font-bold">{formatCurrency(totalAvailable)}</p>
+            <p className="text-zinc-400 text-xs font-mono-data mt-1">{utilizationRate.toFixed(1)}% utilized</p>
           </div>
           <div className="glass-card glass-card-hover p-5">
             <div className="flex items-center gap-2 mb-3">
-              <Clock className="w-4 h-4 text-yellow-500" strokeWidth={1.5} />
+              <Clock className="w-4 h-4 text-yellow-600" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">Min. Due Total</span>
             </div>
-            <p className="text-yellow-400 text-2xl font-bold">{formatCurrency(totalMinDue)}</p>
-            <p className="text-zinc-600 text-xs font-mono-data mt-1">
+            <p className="text-yellow-700 text-2xl font-bold">{formatCurrency(totalMinDue)}</p>
+            <p className="text-zinc-400 text-xs font-mono-data mt-1">
               {overdueCount > 0 ? (
-                <span className="text-red-500">{overdueCount} overdue</span>
+                <span className="text-red-600">{overdueCount} overdue</span>
               ) : urgentCount > 0 ? (
-                <span className="text-yellow-500">{urgentCount} due soon</span>
+                <span className="text-yellow-700">{urgentCount} due soon</span>
               ) : (
                 'All current'
               )}
@@ -818,11 +818,11 @@ export default function DashboardSection() {
           </div>
           <div className="glass-card glass-card-hover p-5">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="w-4 h-4 text-violet-500" strokeWidth={1.5} />
+              <TrendingUp className="w-4 h-4 text-violet-600" strokeWidth={1.5} />
               <span className="text-zinc-500 text-xs font-mono-data uppercase">This Month</span>
             </div>
-            <p className="text-white text-2xl font-bold">{formatCurrency(monthlySpending)}</p>
-            <p className="text-zinc-600 text-xs font-mono-data mt-1">total spending</p>
+            <p className="text-zinc-900 text-2xl font-bold">{formatCurrency(monthlySpending)}</p>
+            <p className="text-zinc-400 text-xs font-mono-data mt-1">total spending</p>
           </div>
         </div>
 
@@ -831,15 +831,15 @@ export default function DashboardSection() {
           <div className="mb-12 border-l-4 border-red-500 pl-4">
             <div className="flex items-center gap-2 mb-6">
               <Bell className="w-4 h-4 text-red-500" strokeWidth={1.5} />
-              <h3 className="text-xl font-semibold text-white">Payment Calendar</h3>
+              <h3 className="text-xl font-semibold text-zinc-900">Payment Calendar</h3>
               {overdueCount > 0 && (
-                <span className="text-xs font-mono-data text-red-500 bg-red-500/10 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-mono-data text-red-600 bg-red-500/10 px-2 py-0.5 rounded-full">
                   {overdueCount} action needed
                 </span>
               )}
             </div>
             <div className="glass-card overflow-hidden">
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 text-zinc-600 text-xs font-mono-data uppercase">
+              <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-zinc-100 text-zinc-500 text-xs font-mono-data uppercase">
                 <span className="col-span-3">Account</span>
                 <span className="col-span-2">Bank</span>
                 <span className="col-span-2">Due Date</span>
@@ -853,26 +853,26 @@ export default function DashboardSection() {
                 return (
                   <div
                     key={payment.id}
-                    className={`grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 items-center hover:bg-white/[0.02] transition-colors ${
+                    className={`grid grid-cols-12 gap-4 px-6 py-4 border-b border-zinc-100 items-center hover:bg-zinc-50 transition-colors ${
                       isOverdue ? 'bg-red-500/5' : isUrgent ? 'bg-yellow-500/5' : ''
                     }`}
                   >
-                    <span className="col-span-3 text-white text-sm font-medium">{payment.account_name}</span>
+                    <span className="col-span-3 text-zinc-900 text-sm font-medium">{payment.account_name}</span>
                     <span className="col-span-2 text-zinc-500 text-xs font-mono-data">{payment.institution_name}</span>
-                    <span className="col-span-2 text-zinc-400 text-xs font-mono-data">
-                      {payment.dueDate} <span className="text-zinc-600">(Day {payment.due_day})</span>
+                    <span className="col-span-2 text-zinc-500 text-xs font-mono-data">
+                      {payment.dueDate} <span className="text-zinc-400">(Day {payment.due_day})</span>
                     </span>
-                    <span className="col-span-2 text-white text-sm font-mono-data">
+                    <span className="col-span-2 text-zinc-900 text-sm font-mono-data">
                       {formatCurrency(payment.minimum_payment, payment.currency_code)}
                     </span>
                     <span className="col-span-2">
                       <span
                         className={`chip font-mono-data ${
                           isOverdue
-                            ? 'text-red-400 bg-red-400/10'
+                            ? 'text-red-600 bg-red-500/10'
                             : isUrgent
-                            ? 'text-yellow-400 bg-yellow-400/10'
-                            : 'text-green-400 bg-green-400/10'
+                            ? 'text-yellow-700 bg-yellow-500/10'
+                            : 'text-green-700 bg-green-500/10'
                         }`}
                                              >
                         {isOverdue ? 'Overdue' : isUrgent ? 'Due Soon' : daysUntilText(payment.daysUntilDue || 0)}
@@ -884,7 +884,7 @@ export default function DashboardSection() {
                           const acc = accounts.find((a) => a.id === payment.account_id);
                           if (acc) setScheduleAccount(acc);
                         }}
-                        className="p-1.5 text-zinc-700 hover:text-violet-500 transition-colors"
+                        className="p-1.5 text-zinc-400 hover:text-violet-600 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                       </button>
@@ -899,18 +899,18 @@ export default function DashboardSection() {
         {/* Accounts by Group */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-semibold text-white">Linked Accounts</h3>
+            <h3 className="text-xl font-semibold text-zinc-900">Linked Accounts</h3>
             <div className="flex items-center gap-3">
               <button
                 onClick={handleSync}
                 disabled={syncing}
-                className="flex items-center gap-2 text-zinc-500 hover:text-white text-sm font-medium transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 text-zinc-500 hover:text-zinc-900 text-sm font-medium transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
                 {syncing ? 'Syncing...' : 'Sync'}
               </button>
               <button
-                className="flex items-center gap-2 text-violet-500 text-sm font-medium hover:text-violet-400 transition-colors"
+                className="flex items-center gap-2 text-violet-600 text-sm font-medium hover:text-violet-500 transition-colors"
                 onClick={openPlaidLink}
               >
                 <Plus className="w-4 h-4" />
@@ -923,8 +923,8 @@ export default function DashboardSection() {
 
           {accounts.length === 0 && !loading && (
             <div className="glass-card p-8 text-center">
-              <Building2 className="w-8 h-8 text-zinc-600 mx-auto mb-3" />
-              <p className="text-white text-sm font-medium mb-1">No accounts linked yet</p>
+              <Building2 className="w-8 h-8 text-zinc-300 mx-auto mb-3" />
+              <p className="text-zinc-900 text-sm font-medium mb-1">No accounts linked yet</p>
               <p className="text-zinc-500 text-xs mb-4">Connect your bank accounts to see real data</p>
               <button
                 onClick={openPlaidLink}
@@ -970,7 +970,7 @@ export default function DashboardSection() {
                         {/* Unlink button */}
                         <button
                           onClick={(e) => handleDeleteAccount(account.id, e)}
-                          className="absolute top-3 right-3 p-1.5 text-zinc-700 hover:text-red-500 transition-colors z-10"
+                          className="absolute top-3 right-3 p-1.5 text-zinc-300 hover:text-red-500 transition-colors z-10"
                           title="Remove account"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -980,25 +980,25 @@ export default function DashboardSection() {
                           <div className="flex items-center gap-3">
                             <div
                               className="w-9 h-9 flex items-center justify-center text-white font-bold text-[10px]"
-                              style={{ backgroundColor: cardColor, borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.4)' }}
+                              style={{ backgroundColor: cardColor, borderRadius: '10px', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
                             >
                               {getCardLogo(account.institution_name, account.type)}
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <p className="text-white text-sm font-medium">{account.institution_name}</p>
+                                <p className="text-zinc-900 text-sm font-medium">{account.institution_name}</p>
                                 {isCredit && (
-                                  <span className="text-[10px] font-mono-data uppercase text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded-full">
+                                  <span className="text-[10px] font-mono-data uppercase text-red-600 bg-red-500/10 px-1.5 py-0.5 rounded-full">
                                     Credit
                                   </span>
                                 )}
                               </div>
-                              <p className="text-zinc-600 text-xs font-mono-data">**** {account.mask || '0000'}</p>
+                              <p className="text-zinc-400 text-xs font-mono-data">**** {account.mask || '0000'}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-1">
                             {hasSchedule && schedule?.autopay_enabled && (
-                              <span title="Autopay on"><CheckCircle2 className="w-3.5 h-3.5 text-green-500" /></span>
+                              <span title="Autopay on"><CheckCircle2 className="w-3.5 h-3.5 text-green-600" /></span>
                             )}
                           </div>
                         </div>
@@ -1007,7 +1007,7 @@ export default function DashboardSection() {
                           <p className="text-zinc-500 text-xs font-mono-data uppercase mb-1">
                             {isCredit ? 'Current Balance' : 'Balance'}
                           </p>
-                          <p className="text-white text-xl font-bold">
+                          <p className="text-zinc-900 text-xl font-bold">
                             {formatCurrency(account.balance_current, account.currency_code)}
                           </p>
                         </div>
@@ -1020,13 +1020,13 @@ export default function DashboardSection() {
                                 {formatCurrency(account.balance_available, account.currency_code)} avail
                               </span>
                             </div>
-                            <div className="w-full h-2 bg-white/5 overflow-hidden rounded-full">
+                            <div className="w-full h-2 bg-zinc-100 overflow-hidden rounded-full">
                               <div
                                 className="h-full transition-all rounded-full"
                                 style={{
                                   width: `${Math.min(utilization, 100)}%`,
                                   background: utilization > 80 ? 'linear-gradient(90deg,#f87171,#ef4444)' : utilization > 50 ? 'linear-gradient(90deg,#fb923c,#f97316)' : 'linear-gradient(90deg,#4ade80,#22c55e)',
-                                  boxShadow: utilization > 80 ? '0 0 10px rgba(239,68,68,0.5)' : 'none',
+                                  boxShadow: utilization > 80 ? '0 0 10px rgba(239,68,68,0.35)' : 'none',
                                 }}
                               />
                             </div>
@@ -1040,22 +1040,22 @@ export default function DashboardSection() {
 
                         {/* Payment schedule indicator */}
                         {hasSchedule && (
-                          <div className="flex items-center gap-1.5 mb-3 pt-2 border-t border-white/5">
-                            <Calendar className="w-3 h-3 text-zinc-600" />
+                          <div className="flex items-center gap-1.5 mb-3 pt-2 border-t border-zinc-100">
+                            <Calendar className="w-3 h-3 text-zinc-400" />
                             <span className="text-xs font-mono-data text-zinc-500">
                               Due day {schedule.due_day}
                             </span>
                             {schedule.autopay_enabled && (
-                              <span className="text-xs font-mono-data text-green-500 ml-1">• Autopay</span>
+                              <span className="text-xs font-mono-data text-green-600 ml-1">• Autopay</span>
                             )}
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                        <div className="flex items-center justify-between pt-3 border-t border-zinc-100">
                           <span className="text-xs font-mono-data text-zinc-500 capitalize">
                             {account.subtype || account.type}
                           </span>
-                          <ChevronRight className="w-4 h-4 text-zinc-700 group-hover:text-violet-500 transition-colors" />
+                          <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-violet-500 transition-colors" />
                         </div>
                       </div>
                     );
@@ -1071,26 +1071,26 @@ export default function DashboardSection() {
           {!transactionsExpanded ? (
             <button
               onClick={() => setTransactionsExpanded(true)}
-              className="flex items-center gap-3 glass-card px-6 py-4 text-white font-medium hover:border-violet-500/50 transition-colors w-full"
+              className="flex items-center gap-3 glass-card px-6 py-4 text-zinc-900 font-medium hover:border-violet-500/50 transition-colors w-full"
                          >
-              <Banknote className="w-4 h-4 text-zinc-500" />
+              <Banknote className="w-4 h-4 text-zinc-400" />
               <span>View Transactions ({filteredTransactions.length})</span>
-              <ChevronDown className="w-4 h-4 text-zinc-500 ml-auto" />
+              <ChevronDown className="w-4 h-4 text-zinc-400 ml-auto" />
             </button>
           ) : (
             <>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold text-white">Recent Transactions</h3>
+                <h3 className="text-xl font-semibold text-zinc-900">Recent Transactions</h3>
                 <button
                   onClick={() => setTransactionsExpanded(false)}
-                  className="flex items-center gap-1 text-zinc-500 hover:text-white text-sm font-medium transition-colors"
+                  className="flex items-center gap-1 text-zinc-500 hover:text-zinc-900 text-sm font-medium transition-colors"
                 >
                   <ChevronUp className="w-4 h-4" />
                   Hide
                 </button>
               </div>
               <div className="glass-card overflow-hidden">
-                <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 text-zinc-600 text-xs font-mono-data uppercase">
+                <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-zinc-100 text-zinc-500 text-xs font-mono-data uppercase">
                   <span className="col-span-3">Merchant</span>
                   <span className="col-span-2">Account</span>
                   <span className="col-span-2">Date</span>
@@ -1104,26 +1104,26 @@ export default function DashboardSection() {
                 {filteredTransactions.slice(0, 10).map((tx) => (
                   <div
                     key={tx.id}
-                    className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 items-center hover:bg-white/[0.02] transition-colors"
+                    className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-zinc-100 items-center hover:bg-zinc-50 transition-colors"
                   >
-                    <span className="col-span-3 text-white text-sm font-medium truncate">{tx.name}</span>
+                    <span className="col-span-3 text-zinc-900 text-sm font-medium truncate">{tx.name}</span>
                     <span className="col-span-2 text-zinc-500 text-xs font-mono-data">{tx.account_name}</span>
-                    <span className="col-span-2 text-zinc-400 text-xs font-mono-data">{tx.date}</span>
-                    <span className={`col-span-2 text-sm font-mono-data font-medium ${tx.amount < 0 ? 'text-green-400' : 'text-white'}`}>
+                    <span className="col-span-2 text-zinc-500 text-xs font-mono-data">{tx.date}</span>
+                    <span className={`col-span-2 text-sm font-mono-data font-medium ${tx.amount < 0 ? 'text-green-600' : 'text-zinc-900'}`}>
                       {tx.amount < 0 ? '' : '+'}
                       {formatCurrency(Math.abs(tx.amount))}
                     </span>
                     <span className="col-span-2">
                       <span
                         className={`chip font-mono-data ${
-                          tx.pending ? 'text-yellow-400 bg-yellow-400/10' : 'text-green-400 bg-green-400/10'
+                          tx.pending ? 'text-yellow-700 bg-yellow-500/10' : 'text-green-700 bg-green-500/10'
                         }`}
                                              >
                         {tx.pending ? 'Pending' : 'Posted'}
                       </span>
                     </span>
                     <span className="col-span-1 flex justify-end">
-                      <button className="p-1.5 text-zinc-700 hover:text-violet-500 transition-colors">
+                      <button className="p-1.5 text-zinc-300 hover:text-violet-600 transition-colors">
                         <Banknote className="w-4 h-4" />
                       </button>
                     </span>

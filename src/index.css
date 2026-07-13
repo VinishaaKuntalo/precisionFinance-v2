@@ -4,9 +4,9 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 25% 97%;
     --foreground: 240 10% 9%;
-    --card: 240 5% 96%;
+    --card: 0 0% 100%;
     --card-foreground: 240 10% 9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 9%;
@@ -14,54 +14,25 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 240 5% 96%;
     --secondary-foreground: 240 10% 9%;
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 45%;
+    --muted: 240 5% 95%;
+    --muted-foreground: 240 4% 40%;
     --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 0% / 0.1;
-    --input: 240 6% 0% / 0.1;
+    --border: 240 6% 88%;
+    --input: 240 6% 88%;
     --ring: 262 83% 58%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 240 15% 4%;
-    --foreground: 0 0% 100%;
-    --card: 240 10% 8%;
-    --card-foreground: 0 0% 100%;
-    --popover: 240 12% 6%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 262 83% 65%;
-    --primary-foreground: 0 0% 8%;
-    --secondary: 240 10% 8%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 10% 8%;
-    --muted-foreground: 240 6% 55%;
-    --accent: 262 83% 65%;
-    --accent-foreground: 0 0% 8%;
-    --destructive: 0 72% 58%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.08;
-    --input: 0 0% 100% / 0.08;
-    --ring: 262 83% 65%;
     --radius: 0.75rem;
   }
 
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-
-  /* Ambient gradient wash behind everything — one restrained accent hue,
-     not a multi-color mesh. Subtle, mostly-neutral zinc-950 base. */
-  .dark body {
-    background-color: #09090b;
+    background-color: #f9f7f3;
     background-image:
-      radial-gradient(ellipse 50% 38% at 15% -5%, rgba(124, 58, 237, 0.12), transparent 60%),
-      radial-gradient(ellipse 45% 35% at 90% 10%, rgba(124, 58, 237, 0.06), transparent 60%),
-      radial-gradient(ellipse 55% 40% at 50% 110%, rgba(124, 58, 237, 0.05), transparent 65%);
+      radial-gradient(ellipse 50% 35% at 12% -5%, rgba(124, 58, 237, 0.06), transparent 60%),
+      radial-gradient(ellipse 45% 32% at 92% 8%, rgba(124, 58, 237, 0.04), transparent 60%);
     background-attachment: fixed;
   }
 
@@ -76,52 +47,52 @@
 }
 
 @layer components {
-  /* ── Glass surfaces ─────────────────────────────── */
+  /* ── Surfaces ───────────────────────────────────── */
   .glass-card {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(24, 24, 27, 0.08);
     border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(24, 24, 27, 0.03);
   }
 
   .glass-card-hover {
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .glass-card-hover:hover {
-    border-color: rgba(167, 139, 250, 0.4);
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+    border-color: rgba(124, 58, 237, 0.35);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
   }
 
-  /* Inset panel inside a glass card */
+  /* Inset panel inside a card */
   .glass-inset {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(24, 24, 27, 0.03);
+    border: 1px solid rgba(24, 24, 27, 0.06);
     border-radius: 10px;
   }
 
-  /* Strong glass for modals / nav */
+  /* Elevated surface for modals / popovers */
   .glass-modal {
-    background: rgba(15, 15, 20, 0.92);
-    -webkit-backdrop-filter: blur(24px);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(24, 24, 27, 0.08);
     border-radius: 16px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 60px rgba(24, 24, 27, 0.14);
   }
 
   /* ── Inputs ─────────────────────────────────────── */
   .glass-input {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(24, 24, 27, 0.14);
     border-radius: 8px;
-    color: #fff;
+    color: #18181b;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .glass-input::placeholder {
+    color: #a1a1aa;
   }
   .glass-input:focus {
     outline: none;
-    border-color: rgba(167, 139, 250, 0.6);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
   }
 
   /* ── Buttons ────────────────────────────────────── */
@@ -130,11 +101,12 @@
     color: #fff;
     font-weight: 600;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(24, 24, 27, 0.05);
+    box-shadow: 0 1px 2px rgba(124, 58, 237, 0.2);
     transition: background-color 0.15s ease, transform 0.1s ease;
   }
   .btn-primary:hover {
-    background-color: #8b5cf6;
+    background-color: #6d28d9;
     transform: translateY(-1px);
   }
   .btn-primary:active {
@@ -142,16 +114,16 @@
   }
 
   .btn-ghost {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(24, 24, 27, 0.035);
+    border: 1px solid rgba(24, 24, 27, 0.1);
     border-radius: 12px;
-    color: #d4d4d8;
+    color: #3f3f46;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
   .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
+    background: rgba(24, 24, 27, 0.06);
+    border-color: rgba(24, 24, 27, 0.18);
+    color: #18181b;
   }
 
   /* ── Chips / badges ─────────────────────────────── */
@@ -159,9 +131,7 @@
     border-radius: 999px;
     padding: 4px 12px;
     font-size: 11px;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(24, 24, 27, 0.06);
   }
 }
 
@@ -169,15 +139,13 @@
   .text-balance {
     text-wrap: balance;
   }
-}
 
-@layer utilities {
   .font-mono-data {
     font-family: 'JetBrains Mono', monospace;
   }
 
   .text-gradient {
-    background: linear-gradient(120deg, #c4b5fd, #8b5cf6 45%, #6366f1);
+    background: linear-gradient(120deg, #7c3aed, #6d28d9 45%, #4c1d95);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -185,7 +153,7 @@
 
   .border-glow {
     border: 1px solid rgba(124, 58, 237, 0.3);
-    box-shadow: inset 0 0 20px rgba(124, 58, 237, 0.05);
+    box-shadow: inset 0 0 20px rgba(124, 58, 237, 0.04);
   }
 
   .bg-card {

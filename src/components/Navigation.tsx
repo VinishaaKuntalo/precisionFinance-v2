@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, LogOut, Sun, Moon, Settings, Server } from 'lucide-react';
+import { Menu, X, LogOut, Settings, Server } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { useTheme } from '@/context/ThemeContext';
 import { getApiUrl, setApiUrl } from '@/services/api';
 
 const navLinks = [
@@ -24,7 +23,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+      style={{ backgroundColor: 'rgba(24,24,27,0.4)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       <div
@@ -32,8 +31,8 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-white font-semibold text-sm">Settings</h3>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white">
+          <h3 className="text-zinc-900 font-semibold text-sm">Settings</h3>
+          <button onClick={onClose} className="text-zinc-400 hover:text-zinc-900">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -50,7 +49,7 @@ function SettingsModal({ onClose }: { onClose: () => void }) {
               onChange={(e) => setApiUrlState(e.target.value)}
               className="w-full glass-input text-sm px-3 py-2"
             />
-            <p className="text-zinc-600 text-xs mt-1.5">
+            <p className="text-zinc-500 text-xs mt-1.5">
               Backend server URL. Default: http://localhost:3001
             </p>
           </div>
@@ -72,7 +71,6 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,14 +86,12 @@ export default function Navigation() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const isDark = theme === 'dark';
-
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/50 border-b border-white/10'
+            ? 'bg-white/80 border-b border-zinc-200'
             : 'bg-transparent border-b border-transparent'
         }`}
         style={{ backdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none' }}
@@ -104,11 +100,11 @@ export default function Navigation() {
           <a href="#hero" onClick={() => scrollTo('#hero')} className="flex items-center gap-2.5 group">
             <div
               className="w-7 h-7 flex items-center justify-center rounded-lg transition-transform group-hover:scale-105"
-              style={{ background: 'linear-gradient(135deg,#8b5cf6,#6d28d9)', boxShadow: '0 2px 12px rgba(124,58,237,0.4)' }}
+              style={{ background: 'linear-gradient(135deg,#8b5cf6,#6d28d9)', boxShadow: '0 2px 12px rgba(124,58,237,0.3)' }}
             >
               <span className="text-white font-bold text-[10px]">PF</span>
             </div>
-            <span className="text-white font-semibold text-sm tracking-tight">
+            <span className="text-zinc-900 font-semibold text-sm tracking-tight">
               Precision Finance
             </span>
           </a>
@@ -118,13 +114,13 @@ export default function Navigation() {
               <button
                 key={link.label}
                 onClick={() => scrollTo(link.href)}
-                className="text-zinc-400 hover:text-white hover:bg-white/5 text-xs font-mono-data uppercase tracking-wider transition-colors px-3 py-2 rounded-lg"
+                className="text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 text-xs font-mono-data uppercase tracking-wider transition-colors px-3 py-2 rounded-lg"
               >
                 {link.label}
               </button>
             ))}
 
-            <div className="w-px h-5 bg-white/10 mx-3" />
+            <div className="w-px h-5 bg-zinc-200 mx-3" />
 
             <button
               className="btn-primary text-xs px-4 py-2 font-semibold"
@@ -134,16 +130,8 @@ export default function Navigation() {
             </button>
 
             <button
-              onClick={toggleTheme}
-              className="text-zinc-500 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-colors ml-1"
-              title={isDark ? 'Switch to light' : 'Switch to dark'}
-            >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-
-            <button
               onClick={() => setSettingsOpen(true)}
-              className="text-zinc-500 hover:text-white hover:bg-white/5 p-2 rounded-lg transition-colors"
+              className="text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 p-2 rounded-lg transition-colors ml-1"
               title="Settings"
             >
               <Settings className="w-4 h-4" />
@@ -152,7 +140,7 @@ export default function Navigation() {
             {user && (
               <button
                 onClick={logout}
-                className="text-zinc-500 hover:text-red-400 text-xs font-mono-data uppercase tracking-wider transition-colors flex items-center gap-1.5 ml-1 pl-3 border-l border-white/10"
+                className="text-zinc-500 hover:text-red-500 text-xs font-mono-data uppercase tracking-wider transition-colors flex items-center gap-1.5 ml-1 pl-3 border-l border-zinc-200"
                 title="Logout"
               >
                 <LogOut className="w-3 h-3" />
@@ -162,7 +150,7 @@ export default function Navigation() {
           </div>
 
           <button
-            className="md:hidden text-zinc-400 hover:text-white"
+            className="md:hidden text-zinc-500 hover:text-zinc-900"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -170,12 +158,12 @@ export default function Navigation() {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden bg-black/95 border-b border-white/10 px-6 pb-4">
+          <div className="md:hidden bg-white border-b border-zinc-200 px-6 pb-4">
             {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={() => scrollTo(link.href)}
-                className="block w-full text-left text-zinc-400 hover:text-white text-sm py-3 border-b border-white/5 transition-colors"
+                className="block w-full text-left text-zinc-500 hover:text-zinc-900 text-sm py-3 border-b border-zinc-100 transition-colors"
               >
                 {link.label}
               </button>
@@ -188,15 +176,8 @@ export default function Navigation() {
             </button>
             <div className="flex items-center gap-4 mt-4">
               <button
-                onClick={toggleTheme}
-                className="text-zinc-500 hover:text-white text-sm flex items-center gap-2"
-              >
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                {isDark ? 'Light Mode' : 'Dark Mode'}
-              </button>
-              <button
                 onClick={() => { setSettingsOpen(true); setMobileOpen(false); }}
-                className="text-zinc-500 hover:text-white text-sm flex items-center gap-2"
+                className="text-zinc-500 hover:text-zinc-900 text-sm flex items-center gap-2"
               >
                 <Settings className="w-4 h-4" />
                 Settings
@@ -205,7 +186,7 @@ export default function Navigation() {
             {user && (
               <button
                 onClick={logout}
-                className="w-full mt-2 text-zinc-500 hover:text-red-500 text-sm py-2 border-b border-white/5 transition-colors text-left"
+                className="w-full mt-2 text-zinc-500 hover:text-red-500 text-sm py-2 border-b border-zinc-100 transition-colors text-left"
               >
                 Logout ({user.email})
               </button>
