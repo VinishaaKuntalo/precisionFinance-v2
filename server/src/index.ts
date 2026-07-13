@@ -182,8 +182,16 @@ app.post('/api/plaid/link-token', authMiddleware, async (req: AuthenticatedReque
     console.log(`Link token created for user ${req.userId}, redirect_uri: ${redirectUri}`);
     res.json({ link_token: tokenResponse.data.link_token });
   } catch (err: any) {
-    console.error('Link token error:', err.response?.data || err.message);
-    res.status(500).json({ error: 'Failed to create link token' });
+    const plaidError = err.response?.data;
+    console.error('Link token error:', plaidError || err.message);
+    // Surface Plaid's actual error_code/message to the client instead of a
+    // generic string — this is what makes "failed to create link token"
+    // diagnosable from the browser instead of needing server log access.
+    res.status(500).json({
+      error: plaidError?.error_message || err.message || 'Failed to create link token',
+      error_code: plaidError?.error_code,
+      error_type: plaidError?.error_type,
+    });
   }
 });
 
